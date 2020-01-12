@@ -1,0 +1,57 @@
+<!-- Sidebar menu -->
+<?php
+    $sideMenuItems = BackendMenu::listSideMenuItems();
+    if ($sideMenuItems):
+        $collapsedGroups = explode('|',
+    isset($_COOKIE['sidenav_treegroupStatus']) ? $_COOKIE['sidenav_treegroupStatus'] : null);
+    $categories = [];
+    foreach ($sideMenuItems as $sideItemCode => $item){
+        if(!property_exists($item, 'group'))
+            $item->group = e(trans('xitara.core::lang.core.mainmenu'));
+        if(!property_exists($item, 'keywords'))
+            $item->keywords = '';
+        if(!property_exists($item, 'description'))
+            $item->description = '';
+        $categories[$item->group][$sideItemCode] = $item;
+    }
+?>
+    <ul class="top-level">
+    <?php foreach ($categories as $category => $items):
+            $collapsed = in_array($category, $collapsedGroups);
+            if (!isset($_COOKIE['sidenav_treegroupStatus'])) {
+                /**
+                 * true -> collapsed per default
+                 * false -> expanded per default
+                 * @var boolean
+                 */
+                $collapsed = true;
+            }
+    ?>
+        <li data-group-code="<?= e($category); ?>"
+            <?= $collapsed ? 'data-status="collapsed"' : null; ?>
+        >
+            <div class="group">
+                <h3><?= e(trans($category)); ?></h3>
+            </div>
+            <ul>
+            <?php foreach ($items as $item): ?>
+                <?php if (!isset($item->hidden) || $item->hidden == false): ?>
+                    <li class="<?= BackendMenu::isSideMenuItemActive($item) ? 'active' : null; ?>"
+                        data-keywords="<?= e(trans($item->keywords)); ?>">
+                        <?php if (isset($item->placeholder) && $item->placeholder === true): ?>
+                            <hr style="margin: 0;">
+                        <?php else: ?>
+                            <a href="<?= $item->url; ?>">
+                                <i class="sidebar-menu-item <?= $item->icon; ?>"></i>
+                                <span class="header"><?= e(trans($item->label)); ?></span>
+                                <span class="description"><?= e(trans($item->description)); ?></span>
+                            </a>
+                        <?php endif; ?>
+                    </li>
+                <?php endif; ?>
+            <?php endforeach; ?>
+            </ul>
+        </li>
+    <?php endforeach; ?>
+    </ul>
+<?php endif; ?>
