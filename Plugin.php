@@ -70,8 +70,8 @@ class Plugin extends PluginBase
          * and inject js to current controller instance.
          */
         Event::listen('backend.page.beforeDisplay', function ($controller) {
-            $controller->addCss("/plugins/xitara/core/assets/css/backend.css", "1.0.0");
-            $controller->addJs("/plugins/xitara/core/assets/js/collapsible.jquery.js", "1.0.0");
+            // $controller->addCss("/plugins/xitara/core/assets/css/backend.css", "1.0.0");
+            // $controller->addJs("/plugins/xitara/core/assets/js/collapsible.jquery.js", "1.0.0");
         });
     }
 
@@ -132,14 +132,14 @@ class Plugin extends PluginBase
         ];
 
         foreach (PluginManager::instance()->getPlugins() as $name => $plugin) {
-            if (strpos($name, 'Xitara.' . self::PLUGIN_SUFFIX) !== false) {
-                $namespace = str_replace('.', '\\', $name) . '\Plugin';
+            // if (strpos($name, 'Xitara.' . self::PLUGIN_SUFFIX) !== false) {
+            $namespace = str_replace('.', '\\', $name) . '\Plugin';
 
-                if (method_exists($namespace, 'injectSideMenu')) {
-                    $inject = $namespace::injectSideMenu();
-                    $items = array_merge($items, $inject);
-                }
+            if (method_exists($namespace, 'injectSideMenu')) {
+                $inject = $namespace::injectSideMenu();
+                $items = array_merge($items, $inject);
             }
+            // }
         }
 
         Event::listen('backend.menu.extendItems', function ($manager) use ($owner, $code, $items) {
