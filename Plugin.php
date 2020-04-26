@@ -3,22 +3,12 @@
 use App;
 use Backend;
 use BackendMenu;
-use Config;
 use Event;
-use Session;
 use System\Classes\PluginBase;
 use System\Classes\PluginManager;
 
 class Plugin extends PluginBase
 {
-    const PLUGIN_SUFFIX = '';
-
-    public $require = [
-        // 'RainLab.User',
-        // 'RainLab.UserPlus',
-        // 'RainLab.Translate',
-    ];
-
     /**
      * Returns information about this plugin.
      *
@@ -29,8 +19,9 @@ class Plugin extends PluginBase
         return [
             'name' => 'xitara.core::lang.plugin.name',
             'description' => 'xitara.core::lang.plugin.description',
-            'author' => 'Xitara Websolution',
-            'homepage' => 'https://xitara.net',
+            'author' => 'xitara.core::lang.plugin.author',
+            'homepage' => 'xitara.core::lang.plugin.homepage',
+            'icon' => '',
         ];
     }
 
@@ -51,16 +42,6 @@ class Plugin extends PluginBase
         }
 
         /**
-         * set submenu suffix
-         */
-        Session::put('core_nav_prefix', 'Sma');
-
-        /**
-         * set new backend-skin
-         */
-        Config::set('cms.backendSkin', 'Xitara\Core\Classes\BackendSkin');
-
-        /**
          * add items to sidemenu
          */
         $this->getSideMenu('Xitara.Core', 'core');
@@ -70,8 +51,8 @@ class Plugin extends PluginBase
          * and inject js to current controller instance.
          */
         Event::listen('backend.page.beforeDisplay', function ($controller) {
-            // $controller->addCss("/plugins/xitara/core/assets/css/backend.css", "1.0.0");
-            // $controller->addJs("/plugins/xitara/core/assets/js/collapsible.jquery.js", "1.0.0");
+            // $controller->addCss("/plugins/xitara/core/assets/css/app.css", "1.0.0");
+            // $controller->addJs("/plugins/xitara/core/assets/js/app.js", "1.0.0");
         });
     }
 
@@ -82,14 +63,12 @@ class Plugin extends PluginBase
      */
     public function registerNavigation()
     {
-        // return [];
-
         return [
             'core' => [
                 'label' => 'xitara.core::lang.plugin.name',
                 'url' => Backend::url('xitara/core/dashboard'),
                 'icon' => 'icon-leaf',
-                // 'iconSvg' => 'plugins/xitara/core/assets/images/icon-paidmedia.svg',
+                'iconSvg' => 'plugins/xitara/core/assets/icon.svg',
                 'permissions' => ['xitara.core.*'],
                 'order' => 200,
             ],

@@ -2,16 +2,34 @@
 
 use BackendMenu;
 use Backend\Classes\Controller;
+use Backend\Widgets\ReportContainer;
 
 /**
  * Dashboard Back-end Controller
  */
 class Dashboard extends Controller
 {
+    public $requiredPermissions = [
+        'xitara.toolbox.mainmenu',
+        'xitara.toolbox.dashboard',
+    ];
+
+    public $implement = [
+        // 'Backend.Behaviors.FormController',
+        // 'Backend.Behaviors.ListController',
+    ];
+
+    // public $formConfig = 'config_form.yaml';
+    public $listConfig = [
+        // 'paybacks' => 'config_payback_list.yaml',
+        // 'bonuses' => 'config_bonus_list.yaml',
+    ];
+
     public function __construct()
     {
         parent::__construct();
-        BackendMenu::setContext('Xitara.Core', 'core', 'dashboard');
+        BackendMenu::setContextOwner('Xitara.Core');
+        BackendMenu::setContext('Xitara.Core', 'core', 'core.dashboard');
     }
 
     public function componentDetails()
@@ -24,7 +42,39 @@ class Dashboard extends Controller
 
     public function index()
     {
-        // var_dump(Session::all());
-        // exit;
+        $this->initReportContainer();
+        // $this->asExtension('ListController')->index();
+    }
+
+    /**
+     * Prepare the report widget used by the dashboard
+     * @param Model $model
+     * @return void
+     */
+    protected function initReportContainer()
+    {
+        $container = new ReportContainer($this, ['context' => 'toolboxDashboard']);
+        $container->bindToController();
+        return $container;
+    }
+
+    public function index_onInitReportContainer()
+    {
+        $container = $this->initReportContainer();
+        return ['#coreReportContainer' => $container->render()];
+    }
+
+    /**
+     * Custom permissions check that will redirect to the next
+     * available menu item, if permission to this page is denied.
+     */
+    protected function checkPermissionRedirect()
+    {
+        if (!$this->user->hasAccess('xitara.toolbox.dashboard')) {
+            $true = function () {return true;};
+            if ($first = array_first(BackendMenu::listMainMenuItems(), $true)) {
+                return Redirect::intended($first->url);
+            }
+        }
     }
 }

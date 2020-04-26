@@ -2,7 +2,9 @@
 return [
     'plugin' => [
         'name' => 'Xitara Core',
-        'description' => 'Core-Plugin für alles Xitara-Plugins',
+        'description' => 'Core-Plugin für alle Xitara-Plugins, inkl. Backend Seitenmenü',
+        'author' => 'Xitara, Manuel Burghammer',
+        'homepage' => 'https://xitara.net',
     ],
     'core' => [
         'comment' => 'Kommentar',

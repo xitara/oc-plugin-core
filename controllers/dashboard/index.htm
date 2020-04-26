@@ -1,1 +1,49 @@
-<p>Dashboard</p>
+<?php
+    Block::put('head');
+    Block::endPut();
+?>
+
+<?php
+    Block::put('sidepanel');
+    if (!$this->fatalError) {
+        $this->makePartial('$/xitara/core/partials/_sidebar.htm');
+    }
+    Block::endPut();
+?>
+
+<?php
+    Block::put('body');
+    if ($this->user->hasAccess('xitara.core.dashboard')) :
+        if (!$this->fatalError):
+?>
+    <?= Form::open(['class'=>'layout-relative dashboard-container']) ?>
+        <div id="coreReportContainer" class="report-container loading">
+
+            <!-- Loading -->
+            <div class="loading-indicator-container">
+                <div class="loading-indicator indicator-center">
+                    <span></span>
+                    <div><?= e(trans('backend::lang.list.loading')) ?></div>
+                </div>
+            </div>
+
+        </div>
+    <?= Form::close() ?>
+
+    <script>
+        $(function() {
+            'use strict';
+            $.request('onInitReportContainer').done(function() {
+                $('#coreReportContainer').removeClass('loading')
+            })
+        });
+    </script>
+<?php else: ?>
+    <p class="flash-message static error"><?= e(trans($this->fatalError)); ?></p>
+<?php
+        endif;
+    else: ?>
+    <h1>Startseite</h1>
+<?php endif;
+    Block::endPut();
+?>
