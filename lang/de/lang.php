@@ -1,7 +1,7 @@
 <?php
 return [
     'plugin' => [
-        'name' => 'Xitara Core',
+        'name' => 'Toolbox 4',
         'description' => 'Core-Plugin für alle Xitara-Plugins, inkl. Backend Seitenmenü',
         'author' => 'Xitara, Manuel Burghammer',
         'homepage' => 'https://xitara.net',
