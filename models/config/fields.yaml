@@ -1,0 +1,5 @@
+fields:
+    blank:
+        label: Xitara Core
+        type: section
+        comment: Bisher keine Einstellungen verfügbar

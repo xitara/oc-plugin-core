@@ -13,7 +13,58 @@
 
 <?php
     Block::put('body');
+
     if ($this->user->hasAccess('xitara.core.dashboard')) :
+        if (\Xitara\Core\Models\Config::get('timezone', true) === false):
+?>
+    <div class="callout fade in callout-danger">
+        <button
+            type="button"
+            class="close"
+            data-dismiss="callout"
+            aria-hidden="true">&times;</button>
+        <div class="header">
+            <i class="icon-warning"></i>
+            <h3><?= e(trans('xitara.core::lang.install.heading')) ?></h3>
+            <p>
+                <?= e(trans('xitara.core::lang.install.text')) ?>
+            </p>
+            <a
+                href="<?= Backend::url('system/settings/update/xitara/core/configs') ?>"
+                title="<?= e(trans('xitara.core::lang.install.button')) ?>"
+                class="btn btn-primary"
+            >
+                <?= e(trans('xitara.core::lang.install.button')) ?>
+            </a>
+        </div>
+    </div>
+<?php
+        endif;
+        if (\Xitara\EroBridge\Models\Config::get('timezone', false) === false):
+ ?>
+    <div class="callout fade in callout-danger">
+        <button
+            type="button"
+            class="close"
+            data-dismiss="callout"
+            aria-hidden="true">&times;</button>
+        <div class="header">
+            <i class="icon-warning"></i>
+            <h3><?= e(trans('xitara.erobridge::lang.install.heading')) ?></h3>
+            <p>
+                <?= e(trans('xitara.erobridge::lang.install.text')) ?>
+            </p>
+            <a
+                href="<?= Backend::url('system/settings/update/xitara/erobridge/configs') ?>"
+                title="<?= e(trans('xitara.erobridge::lang.install.button')) ?>"
+                class="btn btn-primary"
+            >
+                <?= e(trans('xitara.erobridge::lang.install.button')) ?>
+            </a>
+        </div>
+    </div>
+<?php
+        endif;
         if (!$this->fatalError):
 ?>
     <?= Form::open(['class'=>'layout-relative dashboard-container']) ?>

@@ -1,0 +1,63 @@
+$menu-width: 30rem;
+$transition: all 0.3s linear;
+
+/* placeholder */
+li.placeholder {
+    height: 0;
+    border-top: 1px solid #aaa;
+}
+
+/* mobile menu */
+#mobile-show,
+#mobile-hide {
+    display: none;
+}
+
+@include breakpoint(phone-and-down) {
+    #mobile-show {
+        display: block;
+        padding: 13px 15px;
+        background: #2b3e50;
+        color: #bdc3c7;
+        font-size: 14px;
+        line-height: 14px;
+        text-transform: uppercase;
+
+        i {
+            margin-right: 0.75rem;
+        }
+    }
+
+    #mobile-hide {
+        display: block;
+        content: '\D7';
+        position: absolute;
+        top: -2.5rem;
+        font-size: 7rem;
+        color: #f00;
+        left: -$menu-width;
+        transition: $transition;
+        z-index: 999;
+
+        &.active {
+            left: $menu-width;
+        }
+    }
+
+    .sidenav-tree > .layout {
+        display: table;
+        position: fixed;
+        top: 0;
+        left: -$menu-width;
+        z-index: 998;
+        min-height: 100%;
+        max-width: $menu-width;
+        width: $menu-width;
+        background-color: #34495e;
+        transition: $transition;
+
+        &.active {
+            left: 0;
+        }
+    }
+}

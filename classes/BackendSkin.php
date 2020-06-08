@@ -17,7 +17,7 @@ class BackendSkin extends Standard
     public function getLayoutPaths()
     {
         return [
-            base_path() . '/plugins/xitara/core/skins/layouts',
+            base_path() . '/plugins/xitara/core/backend/layouts',
             $this->skinPath . '/layouts',
         ];
     }

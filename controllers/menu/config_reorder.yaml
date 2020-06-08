@@ -1,0 +1,17 @@
+# ===================================
+#  Reorder Behavior Config
+# ===================================
+
+# Reorder Title
+title: xitara.core::core.menu.reorder
+
+# Attribute name
+nameFrom: code
+
+# Model Class name
+modelClass: Xitara\Core\Models\Menu
+
+# Toolbar widget configuration
+# toolbar:
+    # Partial for toolbar buttons
+    # buttons: reorder_toolbar

@@ -40,7 +40,7 @@
                 <?php elseif (!isset($item->hidden) || $item->hidden == false): ?>
                     <li class="<?= BackendMenu::isSideMenuItemActive($item) ? 'active' : null; ?>"
                         data-keywords="<?= e(trans($item->keywords)); ?>">
-                        <a href="<?= $item->url; ?>">
+                        <a href="<?= $item->url; ?>" target="<?= $item->target ?? '_self';?>">
                             <i class="sidebar-menu-item <?= $item->icon; ?>"></i>
                             <span class="header"><?= e(trans($item->label)); ?></span>
                             <span class="description"><?= e(trans($item->description)); ?></span>

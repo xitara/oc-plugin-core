@@ -3,9 +3,11 @@
 use App;
 use Backend;
 use BackendMenu;
+use Config;
 use Event;
 use System\Classes\PluginBase;
 use System\Classes\PluginManager;
+use Xitara\Core\Models\Menu;
 
 class Plugin extends PluginBase
 {
@@ -22,6 +24,7 @@ class Plugin extends PluginBase
             'author' => 'xitara.core::lang.plugin.author',
             'homepage' => 'xitara.core::lang.plugin.homepage',
             'icon' => '',
+            'iconSvg' => 'plugins/xitara/core/assets/images/icon.svg',
         ];
     }
 
@@ -42,18 +45,33 @@ class Plugin extends PluginBase
         }
 
         /**
+         * set new backend-skin
+         */
+        Config::set('cms.backendSkin', 'Xitara\Core\Classes\BackendSkin');
+
+        /**
          * add items to sidemenu
          */
         $this->getSideMenu('Xitara.Core', 'core');
 
-        /**
-         * Listen for `backend.page.beforeDisplay` event
-         * and inject js to current controller instance.
-         */
-        Event::listen('backend.page.beforeDisplay', function ($controller) {
-            // $controller->addCss("/plugins/xitara/core/assets/css/app.css", "1.0.0");
-            // $controller->addJs("/plugins/xitara/core/assets/js/app.js", "1.0.0");
+        Event::listen('backend.page.beforeDisplay', function ($controller, $action, $params) {
+            $controller->addCss('/plugins/xitara/core/assets/css/app.css');
+            $controller->addJs('/plugins/xitara/core/assets/js/app.js');
         });
+    }
+
+    public function registerSettings()
+    {
+        return [
+            'configs' => [
+                'label' => 'xitara.core::lang.config.label',
+                'description' => 'xitara.core::lang.config.description',
+                'category' => 'xitara.core::core.config.name',
+                'icon' => 'icon-settings',
+                'class' => 'Xitara\Core\Models\Config',
+                'order' => 0,
+            ],
+        ];
     }
 
     /**
@@ -65,10 +83,10 @@ class Plugin extends PluginBase
     {
         return [
             'core' => [
-                'label' => 'xitara.core::lang.plugin.name',
+                'label' => 'xitara.core::lang.menu.name',
                 'url' => Backend::url('xitara/core/dashboard'),
                 'icon' => 'icon-leaf',
-                'iconSvg' => 'plugins/xitara/core/assets/icon.svg',
+                'iconSvg' => 'plugins/xitara/core/assets/images/icon-toolbox.svg',
                 'permissions' => ['xitara.core.*'],
                 'order' => 200,
             ],
@@ -102,11 +120,28 @@ class Plugin extends PluginBase
     public static function getSideMenu(string $owner, string $code)
     {
         $items = [
-            'dashboard' => [
+            'core.dashboard' => [
                 'group' => 'xitara.core::lang.core.mainmenu',
                 'label' => 'xitara.core::lang.core.dashboard',
                 'url' => Backend::url('xitara/core/dashboard'),
                 'icon' => 'icon-dashboard',
+                'order' => 10,
+            ],
+            'core.menu' => [
+                'group' => 'xitara.core::lang.core.mainmenu',
+                'label' => 'xitara.core::lang.core.menu',
+                'url' => Backend::url('xitara/core/menu/reorder'),
+                'icon' => 'icon-archive',
+                'order' => 20,
+            ],
+            'core.tb3' => [
+                'group' => 'xitara.core::lang.core.mainmenu',
+                'label' => 'Toolbox 3',
+                'url' => 'https://www2.lady-anja.com/backend/xitara/toolbox/dashboard',
+                'icon' => 'icon-archive',
+                'permissions' => ['xitara.erobridge.erobridge'],
+                'target' => '_blank',
+                'order' => 30,
             ],
         ];
 
@@ -124,5 +159,16 @@ class Plugin extends PluginBase
         Event::listen('backend.menu.extendItems', function ($manager) use ($owner, $code, $items) {
             $manager->addSideMenuItems($owner, $code, $items);
         });
+    }
+
+    public static function getMenuOrder(String $code): int
+    {
+        $item = Menu::find($code);
+
+        if ($item === null) {
+            return 9999;
+        }
+
+        return $item->sort_order;
     }
 }

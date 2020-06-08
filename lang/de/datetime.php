@@ -1,0 +1,32 @@
+<?php
+return [
+    'monday' => 'Montag',
+    'tuesday' => 'Dienstag',
+    'wednesday' => 'Mittwoch',
+    'thursday' => 'Donnerstag',
+    'friday' => 'Freitag',
+    'saturday' => 'Samstag',
+    'sunday' => 'Sonntag',
+
+    'year' => 'Jahr',
+    'years' => 'Jahre',
+    'month' => 'Monat',
+    'months' => 'Monate',
+    'day' => 'Tag',
+    'days' => 'Tage',
+    'full_day' => 'Tag',
+    'full_days' => 'Tage',
+    'hour' => 'Stunde',
+    'hours' => 'Stunden',
+    'minute' => 'Minute',
+    'minutes' => 'Minuten',
+    'second' => 'Sekunde',
+    'seconds' => 'Sekunden',
+
+    // '' => '',
+    // '' => '',
+    // '' => '',
+    // '' => '',
+    // '' => '',
+    // '' => '',
+];
