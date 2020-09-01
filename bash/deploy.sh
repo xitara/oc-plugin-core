@@ -2,6 +2,7 @@
 
 . $(pwd)"/bash/config.sh"
 
+yarn clear
 yarn build
 
 # STORAGE=(*.php assets classes controllers lang partials updates vendor config content layouts meta pages partials theme.yaml plugin.yaml version.yaml)

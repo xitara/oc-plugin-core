@@ -4,12 +4,10 @@
 STORAGE=(*.php assets classes models controllers tests lang partials components console updates vendor config content layouts meta pages partials backend theme.yaml plugin.yaml version.yaml phpunit.xml)
 
 # filename. default name from package.json
-# FILE="core-deploy"
 FILE=$(cat package.json | jq -r .name)
 
 # target path
-# TARGET="$(pwd)/.."
-TARGET="/tmp"
+TARGET="$(pwd)/.."
 
 # ftp for deploy
 FTP_HOST="www3.lady-anja.com"

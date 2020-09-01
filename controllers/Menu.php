@@ -37,20 +37,28 @@ class Menu extends Controller
                     }
 
                     $item = array_shift($menu);
+                    $group = $item['group'] ?? $item->attributes['group'] ?? null;
 
-                    $model = MenuModel::find($item['group']);
+                    if ($group === null) {
+                        continue;
+                    }
+
+                    $code = explode('::', $group);
+                    $code = $code[0];
+                    $model = MenuModel::find($code);
 
                     if ($model !== null) {
                         continue;
                     }
 
                     $model = new MenuModel;
-                    $model->code = $item['group'];
+                    $model->code = $code;
                     $model->sort_order = 9999;
                     $model->save();
                 }
             }
         }
+        // exit;
 
         /**
          * resort sort_order

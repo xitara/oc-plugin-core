@@ -7,7 +7,14 @@
     >
         <div class="record">
             <a href="javascript:;" class="move"></a>
-            <span><?= e(trans($this->reorderGetRecordName($record))) ?></span>
+            <span>
+                <?php if(strpos($record->code, '.custommenulist.') !== false): ?>
+                    <?php $parts = explode('.', $record->code); ?>
+                    <?= ucfirst($parts[2]) ?? $record->code; ?>
+                <?php else: ?>
+                    <?= e(trans($this->reorderGetRecordName($record) . '::lang.submenu.label')) ?>
+                <?php endif; ?>
+            </span>
             <input name="record_ids[]" type="hidden" value="<?= $record->getKey() ?>" />
         </div>
 

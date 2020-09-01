@@ -1,3 +1,6 @@
 1.0.1:
     - First version of XitaraCore
     - create_menus_table.php
+1.0.2:
+    - Add linklists
+    - create_custommenus_table.php

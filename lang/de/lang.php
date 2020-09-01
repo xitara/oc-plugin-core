@@ -6,8 +6,8 @@ return [
         'author' => 'Xitara, Manuel Burghammer',
         'homepage' => 'https://xitara.net',
     ],
-    'menu' => [
-        'name' => 'Toolbox 4',
+    'submenu' => [
+        'label' => 'Toolbox 4',
     ],
     'core' => [
         //     'comment' => 'Kommentar',
@@ -29,5 +29,15 @@ return [
         'heading' => 'Installation der Toolbox 4 nicht abgeschlossen',
         'text' => 'Vor Beginn müssen einige Grundeinstellungen abgeschlossen werden.',
         'button' => 'Einstellungen',
+    ],
+    'custommenu' => [
+        'label' => 'Benutzerdefinierte Menüs',
+        'name' => 'Name',
+        'is_submenu' => 'Im Seitenmenü anzeigen',
+        'is_active' => 'Aktiv',
+        'links' => 'Links',
+        'link' => 'Link',
+        'text' => 'Text',
+        'is_blank' => 'Link im neuen Fenster/Tab öffnen',
     ],
 ];

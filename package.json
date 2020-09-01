@@ -1,5 +1,5 @@
 {
-    "name": "oc-plugin-boilerplate",
+    "name": "core-deploy",
     "version": "0.4.2",
     "description": "Webpack based boilerplate for OctoberCMS including ES6, Babel, Sass",
     "author": "Manuel Burghammer",
@@ -10,6 +10,7 @@
     },
     "scripts": {
         "install": "chmod 755 ./bash/* && yarn build",
+        "clear": "rimraf ./assets",
         "cleanup": "rimraf ./stats.json && rimraf ./manifest.json && rimraf ./node_modules && rimraf ./vendor && rimraf yarn*.lo* && rimraf composer.lock && rimraf ./favicon.ico* && rimraf ./assets && rimraf theme.yaml* && rimraf version.yaml* && rimraf robots.txt",
         "start": "webpack-dev-server --open --mode development --progress --display-error-details",
         "dwatch": "webpack --watch --mode development --progress --display-error-details",

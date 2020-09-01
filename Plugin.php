@@ -5,8 +5,11 @@ use Backend;
 use BackendMenu;
 use Config;
 use Event;
+use Log;
+use Str;
 use System\Classes\PluginBase;
 use System\Classes\PluginManager;
+use Xitara\Core\Models\CustomMenu;
 use Xitara\Core\Models\Menu;
 
 class Plugin extends PluginBase
@@ -67,7 +70,7 @@ class Plugin extends PluginBase
                 'label' => 'xitara.core::lang.config.label',
                 'description' => 'xitara.core::lang.config.description',
                 'category' => 'xitara.core::core.config.name',
-                'icon' => 'icon-settings',
+                'icon' => 'icon-wrench',
                 'class' => 'Xitara\Core\Models\Config',
                 'order' => 0,
             ],
@@ -83,12 +86,12 @@ class Plugin extends PluginBase
     {
         return [
             'core' => [
-                'label' => 'xitara.core::lang.menu.name',
+                'label' => 'xitara.core::lang.submenu.label',
                 'url' => Backend::url('xitara/core/dashboard'),
                 'icon' => 'icon-leaf',
                 'iconSvg' => 'plugins/xitara/core/assets/images/icon-toolbox.svg',
                 'permissions' => ['xitara.core.*'],
-                'order' => 200,
+                'order' => 50,
             ],
         ];
     }
@@ -99,20 +102,33 @@ class Plugin extends PluginBase
      *
      * name = [
      *     group => [string],
-     *     label => [string],
+     *     label => string|'placeholder', // placeholder only
      *     url => [string], (full backend url)
      *     icon => [string],
+     *     'attributes' => [
+     *         'target' => [string],
+     *         'placeholder' => true|false, // placeholder after elm
+     *         'keywords' => [string],
+     *         'description' => [string],
+     *     ],
      * ]
      *
      * name -> unique name
-     * group -> same group where to inject
+     * group -> name to sort menu items
      * label -> shown name in menu
      * url -> url relative to backend
+     * icon -> icon left of label
+     * attribures -> array (optional)
+     *     target -> _blank|_self (optional)
+     *     keywords -> only for searching (optional)
+     *     description -> showed under label (optional)
      *
      * @autor   mburghammer
      * @date    2018-05-15T20:49:04+0100
-     * @version 0.0.2
+     * @version 0.0.3
      * @since   0.0.1
+     * @since   0.0.2 added groups
+     * @since   0.0.3 added attributes
      * @param   string                   $owner
      * @param   string                   $code
      * @param   array                   $inject
@@ -121,27 +137,31 @@ class Plugin extends PluginBase
     {
         $items = [
             'core.dashboard' => [
-                'group' => 'xitara.core::lang.core.mainmenu',
                 'label' => 'xitara.core::lang.core.dashboard',
+                'group' => 'xitara.core::lang.submenu.label',
                 'url' => Backend::url('xitara/core/dashboard'),
                 'icon' => 'icon-dashboard',
-                'order' => 10,
+                'order' => 1,
+                'attributes' => [
+                ],
             ],
             'core.menu' => [
-                'group' => 'xitara.core::lang.core.mainmenu',
                 'label' => 'xitara.core::lang.core.menu',
+                'group' => 'xitara.core::lang.submenu.label',
                 'url' => Backend::url('xitara/core/menu/reorder'),
-                'icon' => 'icon-archive',
-                'order' => 20,
+                'icon' => 'icon-sort',
+                'order' => 2,
+                'attributes' => [
+                ],
             ],
-            'core.tb3' => [
-                'group' => 'xitara.core::lang.core.mainmenu',
-                'label' => 'Toolbox 3',
-                'url' => 'https://www2.lady-anja.com/backend/xitara/toolbox/dashboard',
-                'icon' => 'icon-archive',
-                'permissions' => ['xitara.erobridge.erobridge'],
-                'target' => '_blank',
-                'order' => 30,
+            'core.custommenus' => [
+                'label' => 'xitara.core::lang.custommenu.label',
+                'group' => 'xitara.core::lang.submenu.label',
+                'url' => Backend::url('xitara/core/custommenus'),
+                'icon' => 'icon-link',
+                'order' => 3,
+                'attributes' => [
+                ],
             ],
         ];
 
@@ -151,10 +171,13 @@ class Plugin extends PluginBase
 
                 if (method_exists($namespace, 'injectSideMenu')) {
                     $inject = $namespace::injectSideMenu();
+
                     $items = array_merge($items, $inject);
                 }
             }
         }
+        // var_dump(count($items));
+        // var_dump($items);
 
         Event::listen('backend.menu.extendItems', function ($manager) use ($owner, $code, $items) {
             $manager->addSideMenuItems($owner, $code, $items);
@@ -170,5 +193,50 @@ class Plugin extends PluginBase
         }
 
         return $item->sort_order;
+    }
+
+    /**
+     * inject into sidemenu
+     * @autor   mburghammer
+     * @date    2020-06-26T21:13:34+02:00
+     *
+     * @see Xitara\Core::getSideMenu
+     * @return  array                   sidemenu-data
+     */
+    public static function injectSideMenu()
+    {
+        Log::debug(__METHOD__);
+
+        $custommenus = custommenu::where('is_submenu', 1)
+            ->where('is_active', 1)
+            ->get();
+
+        $inject = [];
+        foreach ($custommenus as $custommenu) {
+            $count = 0;
+            foreach ($custommenu->links as $text => $link) {
+                if ($link['is_active'] == 1) {
+                    $inject['custommenulist.' . $custommenu->slug . '.' . Str::slug($link['text'])] = [
+                        'label' => $link['text'],
+                        'group' => 'xitara.custommenulist.' . $custommenu->slug,
+                        'url' => $link['link'],
+                        'icon' => 'icon-archive',
+                        'permissions' => ['submenu.custommenu.' . $custommenu->slug . '.'
+                            . Str::slug($link['text'])],
+                        'attributes' => [
+                            'target' => ($link['is_blank'] == 1) ? '_blank' : null,
+                            'keywords' => $link['keywords'] ?? null,
+                            'description' => $link['description'] ?? null,
+                        ],
+                        'order' => self::getMenuOrder('xitara.custommenulist.' . $custommenu->slug) + $count++,
+                    ];
+                }
+            }
+        }
+
+        // var_dump($inject);
+
+        // return [];
+        return $inject;
     }
 }

@@ -1,3 +1,4 @@
+
 <?php
     $activeItem = BackendMenu::getActiveMainMenuItem();
     $mySettings = System\Classes\SettingsManager::instance()->listItems('mysettings');
@@ -19,7 +20,7 @@
                 <?php foreach (BackendMenu::listMainMenuItems() as $item): ?>
                     <?php
                         $isActive = BackendMenu::isMainMenuItemActive($item);
-                        if (!isset($item->hidden) || $item->hidden == false):
+                        if (!strpos($item->label, '::hidden')):
                     ?>
                     <li class="<?= $isActive ? 'active' : null ?> svg-icon-container svg-active-effects">
                         <a href="<?= $item->url ?>">
