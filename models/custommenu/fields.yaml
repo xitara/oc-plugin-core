@@ -1,0 +1,43 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+    name:
+        label: xitara.core::lang.custommenu.name
+        type: text
+        span: left
+    is_submenu:
+        label: xitara.core::lang.custommenu.is_submenu
+        type: switch
+        span: left
+        default: 0
+    is_active:
+        label: xitara.core::lang.custommenu.is_active
+        type: switch
+        span: right
+        default: 1
+    links:
+        label: xitara.core::lang.custommenu.links
+        type: repeater
+        form:
+            fields:
+                text:
+                    label: xitara.core::lang.custommenu.text
+                    type: text
+                    span: auto
+                link:
+                    label: xitara.core::lang.custommenu.link
+                    type: text
+                    span: auto
+                is_blank:
+                    label: xitara.core::lang.custommenu.is_blank
+                    type: switch
+                    span: auto
+                    default: 1
+                is_active:
+                    label: xitara.core::lang.custommenu.is_active
+                    type: switch
+                    span: auto
+                    default: 1
+

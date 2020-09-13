@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: CustomMenu
+
+# Model Form Field configuration
+form: $/xitara/core/models/custommenu/fields.yaml
+
+# Model Class name
+modelClass: Xitara\Core\Models\CustomMenu
+
+# Default redirect location
+defaultRedirect: xitara/core/custommenus
+
+# Create page
+create:
+    title: Create CustomMenu
+    redirect: xitara/core/custommenus/update/:id
+    redirectClose: xitara/core/custommenus
+
+# Update page
+update:
+    title: Edit CustomMenu
+    redirect: xitara/core/custommenus
+    redirectClose: xitara/core/custommenus
+
+# Preview page
+preview:
+    title: Preview CustomMenu

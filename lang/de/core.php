@@ -4,6 +4,10 @@ return [
         'name' => 'Xitara',
         'home' => 'https://xitara.net',
     ],
+    'config' => [
+        'name' => 'Toolbox 4',
+        'config' => 'Konfiguration',
+    ],
     'menu' => 'Menü',
     'name' => 'Name',
     'user_id' => 'User ID',
@@ -17,9 +21,11 @@ return [
     'deleted_at' => 'Gelöscht',
     'all' => 'Alle',
     'timezone' => 'Zeitzone',
-    'config' => [
-        'name' => 'Toolbox 4',
-        'config' => 'Konfiguration',
-    ],
     'add' => 'Hinzufügen',
+    'second_s' => 'Sekunde(n)',
+    'minute_s' => 'Minute(n)',
+    'hour_s' => 'Stunde(n)',
+    'day_s' => 'Tag(e)',
+    'month_s' => 'Monat(e)',
+    'year_s' => 'Jahr(e)',
 ];
