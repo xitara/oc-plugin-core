@@ -7,7 +7,7 @@ return [
         'homepage' => 'https://xitara.net',
     ],
     'submenu' => [
-        'label' => 'Xitara Core123',
+        'label' => 'Xitara Core',
     ],
     'core' => [
         'mainmenu' => 'Hauptmenü',
