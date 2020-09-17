@@ -52,8 +52,11 @@
             $item->target = $item->attributes['target'];
         }
 
-        // $categories[$item->group]['order'] = $item->order;
-        $categories[$item->group][$sideItemCode] = $item;
+        foreach ($item->permissions as $permission) {
+            if ($this->user->hasAccess($permission)) {
+                $categories[$item->group][$sideItemCode] = $item;
+            }
+        }
     }
 
     // usort($categories, function($a, $b) {
