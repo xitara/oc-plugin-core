@@ -7,7 +7,7 @@ return [
         'homepage' => 'https://xitara.net',
     ],
     'submenu' => [
-        'label' => 'Hagebau Schneider',
+        'label' => 'Xitara Core123',
     ],
     'core' => [
         'mainmenu' => 'Hauptmenü',
@@ -19,7 +19,7 @@ return [
         'description' => 'Einstellungen global für alle Plugins',
     ],
     'install' => [
-        'heading' => 'Installation der Toolbox 4 nicht abgeschlossen',
+        'heading' => 'Installation des Xitara Core nicht abgeschlossen',
         'text' => 'Vor Beginn müssen einige Grundeinstellungen abgeschlossen werden.',
         'button' => 'Einstellungen',
     ],

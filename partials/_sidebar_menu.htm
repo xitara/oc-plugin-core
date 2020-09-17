@@ -15,19 +15,23 @@
             : null);
 
     $categories = [];
-    foreach ($sideMenuItems as $sideItemCode => $item){
+    foreach ($sideMenuItems as $sideItemCode => $item) {
         // var_dump($sideItemCode);
         // var_dump($item->code);
-        // var_dump($item->order);
+        // var_dump($item);
 
         // continue;
 
-        if (!isset($item->group)){
-            $sub = explode('.', $item->code);
-            $item->group = e(trans('xitara.' . $sub[0] . '::lang.submenu.label'));
+        if (!isset($item->group)) {
+            if (isset($item->attributes['group']) && $item->attributes['group'] != '') {
+                $item->group = $item->attributes['group'];
+            } else {
+                $sub = explode('.', $item->code);
+                $item->group = e(trans('xitara.' . $sub[0] . '::lang.submenu.label'));
+            }
         }
 
-        if (strpos($sideItemCode, 'custommenulist.') !== false){
+        if (strpos($sideItemCode, 'custommenulist.') !== false) {
             $sub = explode('.', $sideItemCode);
             $item->group = ucfirst($sub[1] ?? 'no_text');
         }
