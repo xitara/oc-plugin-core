@@ -9,7 +9,7 @@ use Log;
 use Str;
 use System\Classes\PluginBase;
 use System\Classes\PluginManager;
-use Xitara\Core\Models\Config as Settings;
+use Xitara\Core\Models\Config as CoreConfig;
 use Xitara\Core\Models\CustomMenu;
 use Xitara\Core\Models\Menu;
 
@@ -70,11 +70,15 @@ class Plugin extends PluginBase
 
     public function registerSettings()
     {
+        if (($category = CoreConfig::get('menu_text')) == '') {
+            $category = 'xitara.core::core.config.name';
+        }
+
         return [
             'configs' => [
+                'category' => $category,
                 'label' => 'xitara.core::lang.config.label',
                 'description' => 'xitara.core::lang.config.description',
-                'category' => 'xitara.core::core.config.name',
                 'icon' => 'icon-wrench',
                 'class' => 'Xitara\Core\Models\Config',
                 'order' => 0,
@@ -117,14 +121,14 @@ class Plugin extends PluginBase
      */
     public function registerNavigation()
     {
-        $iconSvg = Settings::get('menu_icon');
-        if ($iconSvg == '' && Settings::get('menu_icon_text', '') == '') {
+        $iconSvg = CoreConfig::get('menu_icon');
+        if ($iconSvg == '' && CoreConfig::get('menu_icon_text', '') == '') {
             $iconSvg = 'plugins/xitara/core/assets/images/icon.svg';
         } elseif ($iconSvg != '') {
             $iconSvg = url(Config::get('cms.storage.media.path') . $iconSvg);
         }
 
-        if (($label = Settings::get('menu_text')) == '') {
+        if (($label = CoreConfig::get('menu_text')) == '') {
             $label = 'xitara.core::lang.submenu.label';
         }
 
@@ -132,7 +136,7 @@ class Plugin extends PluginBase
             'core' => [
                 'label' => $label,
                 'url' => Backend::url('xitara/core/dashboard'),
-                'icon' => Settings::get('menu_icon_text', 'icon-leaf'),
+                'icon' => CoreConfig::get('menu_icon_text', 'icon-leaf'),
                 'iconSvg' => $iconSvg,
                 'permissions' => ['xitara.core.*'],
                 'order' => 50,
@@ -181,8 +185,8 @@ class Plugin extends PluginBase
     public static function getSideMenu(string $owner, string $code)
     {
 
-        Log::debug(Settings::get('menu_text'));
-        if (($group = Settings::get('menu_text')) == '') {
+        Log::debug(CoreConfig::get('menu_text'));
+        if (($group = CoreConfig::get('menu_text')) == '') {
             $group = 'xitara.core::lang.submenu.label';
         }
         Log::debug($group);
