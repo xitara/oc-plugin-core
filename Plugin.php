@@ -78,6 +78,34 @@ class Plugin extends PluginBase
                 'icon' => 'icon-wrench',
                 'class' => 'Xitara\Core\Models\Config',
                 'order' => 0,
+                'permissions' => ['xitara.core.config'],
+            ],
+        ];
+    }
+
+    /**
+     * Registers any back-end permissions used by this plugin.
+     *
+     * @return array
+     */
+    public function registerPermissions()
+    {
+        return [
+            'xitara.core.config' => [
+                'tab' => 'Xitara Core',
+                'label' => 'xitara.core::permissions.config',
+            ],
+            'xitara.core.dashboard' => [
+                'tab' => 'Xitara Core',
+                'label' => 'xitara.core::permissions.dashboard',
+            ],
+            'xitara.core.menu' => [
+                'tab' => 'Xitara Core',
+                'label' => 'xitara.core::permissions.menu',
+            ],
+            'xitara.core.custommenus' => [
+                'tab' => 'Xitara Core',
+                'label' => 'xitara.core::permissions.custommenus',
             ],
         ];
     }
@@ -165,6 +193,7 @@ class Plugin extends PluginBase
                 'url' => Backend::url('xitara/core/dashboard'),
                 'icon' => 'icon-dashboard',
                 'order' => 1,
+                'permissions' => ['xitara.core.dashboard'],
                 'attributes' => [
                     'group' => $group,
                 ],
@@ -174,6 +203,7 @@ class Plugin extends PluginBase
                 'url' => Backend::url('xitara/core/menu/reorder'),
                 'icon' => 'icon-sort',
                 'order' => 2,
+                'permissions' => ['xitara.core.menu'],
                 'attributes' => [
                     'group' => $group,
                 ],
@@ -183,6 +213,7 @@ class Plugin extends PluginBase
                 'url' => Backend::url('xitara/core/custommenus'),
                 'icon' => 'icon-link',
                 'order' => 3,
+                'permissions' => ['xitara.core.custommenus'],
                 'attributes' => [
                     'group' => $group,
                 ],
