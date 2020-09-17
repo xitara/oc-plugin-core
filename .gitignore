@@ -4,7 +4,7 @@
 ### Custom ###
 build
 stats.json
-/assets
+assets
 src/**/*.css*
 yarn.lock
 *.map
@@ -14,6 +14,7 @@ yarn.lock
 /humans.txt
 /manifest.json
 *sublime-*
+*sftp-config*
 /bash/config.sh
 
 ### Composer ###
