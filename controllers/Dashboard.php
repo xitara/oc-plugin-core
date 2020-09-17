@@ -10,8 +10,8 @@ use Backend\Widgets\ReportContainer;
 class Dashboard extends Controller
 {
     public $requiredPermissions = [
-        'xitara.toolbox.mainmenu',
-        'xitara.toolbox.dashboard',
+        'xitara.core.mainmenu',
+        'xitara.core.dashboard',
     ];
 
     public $implement = [
@@ -53,7 +53,8 @@ class Dashboard extends Controller
      */
     protected function initReportContainer()
     {
-        $container = new ReportContainer($this, ['context' => 'toolboxDashboard']);
+        $container = new ReportContainer($this, 'config.yaml');
+        // $container = new ReportContainer($this, ['context' => 'coreDashboard',]);
         $container->bindToController();
         return $container;
     }
@@ -70,7 +71,7 @@ class Dashboard extends Controller
      */
     protected function checkPermissionRedirect()
     {
-        if (!$this->user->hasAccess('xitara.toolbox.dashboard')) {
+        if (!$this->user->hasAccess('xitara.core.dashboard')) {
             $true = function () {return true;};
             if ($first = array_first(BackendMenu::listMainMenuItems(), $true)) {
                 return Redirect::intended($first->url);
