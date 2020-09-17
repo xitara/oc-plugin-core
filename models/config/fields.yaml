@@ -1,5 +1,24 @@
 fields:
-    blank:
-        label: Xitara Core
+    main_menu:
+        label: xitara.core::config.main_menu
         type: section
-        comment: Bisher keine Einstellungen verfügbar
+        comment: xitara.core::config.main_menu_comment
+    menu_text:
+        label: xitara.core::config.menu_text
+        type: text
+        span: left
+        comment: xitara.core::config.menu_text_comment
+    menu_icon:
+        label: xitara.core::config.menu_icon
+        type: mediafinder
+        mode: image
+        fileTypes: svg
+        imageWidth: 30px
+        imageHeight: 30px
+        span: left
+        comment: xitara.core::config.menu_icon_comment
+    menu_icon_text:
+        label: xitara.core::config.menu_icon_text
+        type: text
+        span: right
+        comment: xitara.core::config.menu_icon_text_comment

@@ -9,6 +9,7 @@ use Log;
 use Str;
 use System\Classes\PluginBase;
 use System\Classes\PluginManager;
+use Xitara\Core\Models\Config as Settings;
 use Xitara\Core\Models\CustomMenu;
 use Xitara\Core\Models\Menu;
 
@@ -84,12 +85,23 @@ class Plugin extends PluginBase
      */
     public function registerNavigation()
     {
+        $iconSvg = Settings::get('menu_icon');
+        if ($iconSvg == '' && Settings::get('menu_icon_text', '') == '') {
+            $iconSvg = 'plugins/xitara/core/assets/images/icon-core.svg';
+        } elseif ($iconSvg != '') {
+            $iconSvg = url(Config::get('cms.storage.media.path') . $iconSvg);
+        }
+
+        if (($label = Settings::get('menu_text')) == '') {
+            $label = 'xitara.core::lang.submenu.label';
+        }
+
         return [
             'core' => [
-                'label' => 'xitara.core::lang.submenu.label',
+                'label' => $label,
                 'url' => Backend::url('xitara/core/dashboard'),
-                'icon' => 'icon-leaf',
-                'iconSvg' => 'plugins/xitara/core/assets/images/icon-toolbox.svg',
+                'icon' => Settings::get('menu_icon_text', 'icon-leaf'),
+                'iconSvg' => $iconSvg,
                 'permissions' => ['xitara.core.*'],
                 'order' => 50,
             ],
@@ -110,6 +122,7 @@ class Plugin extends PluginBase
      *         'placeholder' => true|false, // placeholder after elm
      *         'keywords' => [string],
      *         'description' => [string],
+     *         'group' => [string], // group the items and set the heading of group
      *     ],
      * ]
      *
@@ -135,32 +148,39 @@ class Plugin extends PluginBase
      */
     public static function getSideMenu(string $owner, string $code)
     {
+
+        Log::debug(Settings::get('menu_text'));
+        if (($group = Settings::get('menu_text')) == '') {
+            $group = 'xitara.core::lang.submenu.label';
+        }
+        Log::debug($group);
+
         $items = [
             'core.dashboard' => [
                 'label' => 'xitara.core::lang.core.dashboard',
-                'group' => 'xitara.core::lang.submenu.label',
                 'url' => Backend::url('xitara/core/dashboard'),
                 'icon' => 'icon-dashboard',
                 'order' => 1,
                 'attributes' => [
+                    'group' => $group,
                 ],
             ],
             'core.menu' => [
                 'label' => 'xitara.core::lang.core.menu',
-                'group' => 'xitara.core::lang.submenu.label',
                 'url' => Backend::url('xitara/core/menu/reorder'),
                 'icon' => 'icon-sort',
                 'order' => 2,
                 'attributes' => [
+                    'group' => $group,
                 ],
             ],
             'core.custommenus' => [
                 'label' => 'xitara.core::lang.custommenu.label',
-                'group' => 'xitara.core::lang.submenu.label',
                 'url' => Backend::url('xitara/core/custommenus'),
                 'icon' => 'icon-link',
                 'order' => 3,
                 'attributes' => [
+                    'group' => $group,
                 ],
             ],
         ];

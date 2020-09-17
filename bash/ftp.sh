@@ -1,7 +1,6 @@
-#!/bin/bash
+#!bash
 
 . $(pwd)"/bash/config.sh"
-TARGET="/tmp"
 . $(pwd)"/bash/deploy.sh"
 
 lftp $FTP_HOST << EOF

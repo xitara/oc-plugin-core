@@ -7,26 +7,19 @@ return [
         'homepage' => 'https://xitara.net',
     ],
     'submenu' => [
-        'label' => 'Toolbox 4',
+        'label' => 'Xitara Core123',
     ],
     'core' => [
-        //     'comment' => 'Kommentar',
-        //     'created_at' => 'angelegt',
-        //     'deleted_at' => 'gelöscht',
-        //     'id' => 'ID',
         'mainmenu' => 'Hauptmenü',
         'dashboard' => 'Dashboard',
         'menu' => 'Menü-Sortierung',
-        //     'updated_at' => 'aktualisiert',
-        //     'userid' => 'User ID',
-        //     'username' => 'Benutzername',
     ],
     'config' => [
         'label' => 'Grundeinstellungen',
         'description' => 'Einstellungen global für alle Plugins',
     ],
     'install' => [
-        'heading' => 'Installation der Toolbox 4 nicht abgeschlossen',
+        'heading' => 'Installation des Xitara Core nicht abgeschlossen',
         'text' => 'Vor Beginn müssen einige Grundeinstellungen abgeschlossen werden.',
         'button' => 'Einstellungen',
     ],
