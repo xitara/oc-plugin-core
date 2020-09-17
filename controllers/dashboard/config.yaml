@@ -28,6 +28,7 @@ defaultWidgets:
         sortOrder: 80
         configuration:
             ocWidgetWidth: 4
+            ocWidgetNewRow: 1
 
    statusPlus:
         class: Indikator\Backend\ReportWidgets\Status
