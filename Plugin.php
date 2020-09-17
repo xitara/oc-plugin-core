@@ -119,7 +119,7 @@ class Plugin extends PluginBase
     {
         $iconSvg = Settings::get('menu_icon');
         if ($iconSvg == '' && Settings::get('menu_icon_text', '') == '') {
-            $iconSvg = 'plugins/xitara/core/assets/images/icon-core.svg';
+            $iconSvg = 'plugins/xitara/core/assets/images/icon.svg';
         } elseif ($iconSvg != '') {
             $iconSvg = url(Config::get('cms.storage.media.path') . $iconSvg);
         }
