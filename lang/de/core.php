@@ -5,7 +5,7 @@ return [
         'home' => 'https://xitara.net',
     ],
     'config' => [
-        'name' => 'Toolbox 4',
+        'name' => 'Xitara Core',
         'config' => 'Konfiguration',
     ],
     'menu' => 'Menü',

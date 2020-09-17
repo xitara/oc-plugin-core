@@ -7,19 +7,12 @@ return [
         'homepage' => 'https://xitara.net',
     ],
     'submenu' => [
-        'label' => 'Toolbox 4',
+        'label' => 'Hagebau Schneider',
     ],
     'core' => [
-        //     'comment' => 'Kommentar',
-        //     'created_at' => 'angelegt',
-        //     'deleted_at' => 'gelöscht',
-        //     'id' => 'ID',
         'mainmenu' => 'Hauptmenü',
         'dashboard' => 'Dashboard',
         'menu' => 'Menü-Sortierung',
-        //     'updated_at' => 'aktualisiert',
-        //     'userid' => 'User ID',
-        //     'username' => 'Benutzername',
     ],
     'config' => [
         'label' => 'Grundeinstellungen',

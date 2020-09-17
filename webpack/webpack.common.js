@@ -2,7 +2,6 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 const BrotliPlugin = require('brotli-webpack-plugin');
-// const LiveReloadPlugin = require('webpack-livereload-plugin');
 const paths = require('./paths');
 
 module.exports = {
@@ -36,12 +35,14 @@ module.exports = {
                     {
                         loader: 'postcss-loader',
                         options: {
-                            plugins: () => [require('autoprefixer'), require('postcss-flexbugs-fixes')],
                             sourceMap: true,
-                            plugins: [
-                                require('autoprefixer'),
-                            ],
-                            processCssUrls: false,
+                            postcssOptions: {
+                                plugins: [
+                                    require('autoprefixer'),
+                                    require('postcss-flexbugs-fixes'),
+                                ],
+                                processCssUrls: false,
+                            },
                         },
                     },
                     {
@@ -56,32 +57,32 @@ module.exports = {
                 test: /\.html$/,
                 use: 'html-loader',
             },
-			{
-				test: /\.(woff2?|eot|ttf|otf)$/,
-				use: {
-					loader: 'file-loader',
-					options: {
-						publicPath: 'assets/fonts',
-						outputPath: 'assets',
-						// name: '[name].[hash:8].[ext]',
-						name: '[path][name].[ext]',
-						esModule: false,
-					},
-				},
-			},
-			{
-				test: /\.(gif|ico|jpe?g|png|svg|webp)$/,
-				use: {
-					loader: 'file-loader',
-					options: {
-						publicPath: 'assets/images',
-						outputPath: 'assets',
-						// name: '[name].[hash:8].[ext]',
-						name: '[path][name].[ext]',
-						esModule: false,
-					},
-				},
-			},
+            {
+                test: /\.(woff2?|eot|ttf|otf)$/,
+                use: {
+                    loader: 'file-loader',
+                    options: {
+                        publicPath: 'assets/fonts',
+                        outputPath: 'assets',
+                        // name: '[name].[hash:8].[ext]',
+                        name: '[path][name].[ext]',
+                        esModule: false,
+                    },
+                },
+            },
+            {
+                test: /\.(gif|ico|jpe?g|png|svg|webp)$/,
+                use: {
+                    loader: 'file-loader',
+                    options: {
+                        publicPath: 'assets/images',
+                        outputPath: 'assets',
+                        // name: '[name].[hash:8].[ext]',
+                        name: '[path][name].[ext]',
+                        esModule: false,
+                    },
+                },
+            },
         ],
     },
     plugins: [
@@ -90,11 +91,12 @@ module.exports = {
             filename: 'assets/css/[name].css',
             chunkFilename: 'assets/css/[name].[id].css',
         }),
-        new CopyWebpackPlugin([{ from: paths.static }]),
-        new CopyWebpackPlugin([{
-            from: paths.icons,
-            to: 'assets/images/_icons'
-        }]),
+        new CopyWebpackPlugin({
+            patterns: [
+                { from: paths.static },
+                // { from: paths.icons, to: 'assets/images/_icons'},
+            ],
+        }),
         new CompressionPlugin({
             exclude: /\.yaml/,
         }),
