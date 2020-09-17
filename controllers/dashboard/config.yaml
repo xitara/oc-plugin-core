@@ -1,0 +1,42 @@
+# ===================================
+#  Xitara Core Dashboard Config
+# ===================================
+
+defaultWidgets:
+
+   welcome:
+        class: Backend\ReportWidgets\Welcome
+        sortOrder: 50
+        configuration:
+            ocWidgetWidth: 7
+
+   systemStatus:
+        class: System\ReportWidgets\Status
+        sortOrder: 60
+        configuration:
+            ocWidgetWidth: 7
+
+   activeTheme:
+        class: Cms\ReportWidgets\ActiveTheme
+        sortOrder: 70
+        configuration:
+            ocWidgetWidth: 5
+
+   cacheStatus:
+        class: Indikator\Backend\ReportWidgets\Cache
+        title: indikator.backend::lang.widgets.cache.label
+        sortOrder: 80
+        configuration:
+            ocWidgetWidth: 4
+            ocWidgetNewRow: 1
+
+   statusPlus:
+        class: Indikator\Backend\ReportWidgets\Status
+        title: indikator.backend::lang.widgets.system.label
+        sortOrder: 90
+        configuration:
+            ocWidgetWidth: 3
+            webpage: true
+            updates: false
+            plugins: true
+            themes: true
