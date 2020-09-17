@@ -16,25 +16,25 @@ defaultWidgets:
         configuration:
             ocWidgetWidth: 7
 
-   # activeTheme:
-   #      class: Cms\ReportWidgets\ActiveTheme
-   #      sortOrder: 70
-   #      configuration:
-   #          ocWidgetWidth: 5
+   activeTheme:
+        class: Cms\ReportWidgets\ActiveTheme
+        sortOrder: 70
+        configuration:
+            ocWidgetWidth: 5
 
    cacheStatus:
         class: Indikator\Backend\ReportWidgets\Cache
         title: indikator.backend::lang.widgets.cache.label
         sortOrder: 80
         configuration:
-            ocWidgetWidth: 5
+            ocWidgetWidth: 4
 
    statusPlus:
         class: Indikator\Backend\ReportWidgets\Status
         title: indikator.backend::lang.widgets.system.label
         sortOrder: 90
         configuration:
-            ocWidgetWidth: 5
+            ocWidgetWidth: 3
             webpage: true
             updates: false
             plugins: true
