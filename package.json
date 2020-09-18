@@ -1,7 +1,7 @@
 {
-    "name": "oc-webpack-boilerplate",
-    "version": "0.6.1",
-    "description": "Webpack based boilerplate for OctoberCMS including ES6, Babel, Sass",
+    "name": "oc-xitara-core",
+    "version": "0.7.0",
+    "description": "Xitara Core Plugin for OctoberCMS with sidemenu, custom menus, menu sorting and more",
     "author": "Manuel Burghammer",
     "license": "MIT",
     "repository": {
