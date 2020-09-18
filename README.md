@@ -78,3 +78,29 @@ public function registerNavigation()
 - `[VENDOR].[PLUGIN-SLUG]::lang.submenu.label` is the heading of your menu items
 - `[VENDOR].[PLUGIN-SLUG]::lang.submenu.[CONTROLLER]` is the your menu item
 
+## Register backend configs
+On top of `Plugin.php`:
+```php
+use Xitara\Core\Models\Config;
+```
+
+and as registration method
+```php
+    public function registerSettings()
+    {
+        if (($category = Config::get('menu_text')) == '') {
+            $category = 'xitara.core::core.config.name';
+        }
+
+        return [
+            'configs' => [
+                'category' => $category,
+                'label' => '[VENDOR_SLUG].[PLUGIN_SLUG]::lang.submenu.label',
+                'description' => '[VENDOR_SLUG].[PLUGIN_SLUG]::lang.submenu.description',
+                'icon' => 'icon-comments-o',
+                'class' => '[VENDOR]\[PLUGIN]\Models\Config',
+                'order' => 20,
+            ],
+        ];
+    }
+```
