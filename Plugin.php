@@ -63,6 +63,10 @@ class Plugin extends PluginBase
         $this->getSideMenu('Xitara.Core', 'core');
 
         Event::listen('backend.page.beforeDisplay', function ($controller, $action, $params) {
+            if (CoreConfig::get('compact_display')) {
+                $controller->addCss('/plugins/xitara/core/assets/css/compact.css');
+            }
+
             $controller->addCss('/plugins/xitara/core/assets/css/app.css');
             $controller->addJs('/plugins/xitara/core/assets/js/app.js');
         });
