@@ -188,8 +188,9 @@ class Plugin extends PluginBase
      */
     public static function getSideMenu(string $owner, string $code)
     {
-
         Log::debug(CoreConfig::get('menu_text'));
+        Log::debug('owner: ' . $owner);
+
         if (($group = CoreConfig::get('menu_text')) == '') {
             $group = 'xitara.core::lang.submenu.label';
         }

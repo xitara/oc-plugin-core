@@ -44,10 +44,6 @@
             $item->description = $item->attributes['description'] ?? '';
         }
 
-        if ($item->label == 'placeholder') {
-            $item->placeholder = true;
-        }
-
         if (isset($item->attributes['target'])) {
             $item->target = $item->attributes['target'];
         }
@@ -57,6 +53,10 @@
                 $categories[$item->group][$sideItemCode] = $item;
             }
         }
+
+        // if (isset($item->attributes['placeholder']) && $item->attributes['placeholder'] === true) {
+        //     $categories[$item->group][$sideItemCode] = $item;
+        // }
     }
 
     // usort($categories, function($a, $b) {
@@ -88,10 +88,11 @@
             </div>
             <ul>
             <?php foreach ($items as $item): ?>
-                <?php if (isset($item->placeholder) && $item->placeholder == true): ?>
+                <?php if (isset($item->attributes['placeholder'])
+                    && $item->attributes['placeholder'] === true): ?>
                     <li class="placeholder"></li>
                 <?php elseif (!isset($item->hidden) || $item->hidden == false): ?>
-                    <li class="<?= BackendMenu::isSideMenuItemActive($item) ? 'active' : null; ?>"
+                    <li class="<?= BackendMenu::isSideMenuItemActive($item) ? 'active' : null; ?><?= isset($item->attributes['level']) ? ' level-' . $item->attributes['level'] : null; ?>"
                         data-keywords="<?= e(trans($item->keywords)); ?>">
                         <a href="<?= $item->url; ?>" target="<?= $item->target ?? '_self';?>">
                             <i class="sidebar-menu-item <?= $item->icon; ?>"></i>
