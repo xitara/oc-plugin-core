@@ -27,6 +27,17 @@ Implements backend sidemenu, custom menus, menu sorting
 
 ## Register new Plugin to Sidemenu
 
+### Add following to boot() method to catch event and display new sidemenu.
+```php
+Event::listen('backend.page.beforeDisplay', function ($controller, $action, $params) {
+    $namespace = (new \ReflectionObject($controller))->getNamespaceName();
+
+    if ($namespace == '[VENDOR]\[PLUGIN]\Controllers') {
+        Core::getSideMenu('[VENDOR].[PLUGIN]', '[PLUGIN-SLUG]');
+    }
+});
+```
+
 ### Register partial
 ```php
 public function register()
