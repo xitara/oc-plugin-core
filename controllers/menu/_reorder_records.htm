@@ -9,8 +9,7 @@
             <a href="javascript:;" class="move"></a>
             <span>
                 <?php if(strpos($record->code, '.custommenulist.') !== false): ?>
-                    <?php $parts = explode('.', $record->code); ?>
-                    <?= ucfirst($parts[2]) ?? $record->code; ?>
+                    <?= $record->name ?? $record->code ?>
                 <?php else: ?>
                     <?= e(trans($this->reorderGetRecordName($record) . '::lang.submenu.label')) ?>
                 <?php endif; ?>

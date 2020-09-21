@@ -2,6 +2,7 @@
 
 use Model;
 use Str;
+use Xitara\Core\Models\Menu;
 
 /**
  * CustomMenu Model
@@ -73,6 +74,15 @@ class CustomMenu extends Model
 
     public function beforeSave()
     {
+        /**
+         * update code from xitara_core_menus
+         */
+        $success = Menu::where('code', 'xitara.custommenulist.' . $this->slug)
+            ->update([
+                'code' => 'xitara.custommenulist.' . Str::slug($this->name),
+                'name' => $this->name,
+            ]);
+
         $this->slug = Str::slug($this->name);
     }
 

@@ -34,6 +34,12 @@
         if (strpos($sideItemCode, 'custommenulist.') !== false) {
             $sub = explode('.', $sideItemCode);
             $item->group = ucfirst($sub[1] ?? 'no_text');
+
+            if (isset($item->attributes['groupLabel'])) {
+                $item->group = $item->attributes['groupLabel'];
+            } else {
+
+            }
         }
 
         if (!property_exists($item, 'keywords')) {
@@ -95,7 +101,11 @@
                     <li class="<?= BackendMenu::isSideMenuItemActive($item) ? 'active' : null; ?><?= isset($item->attributes['level']) ? ' level-' . $item->attributes['level'] : null; ?>"
                         data-keywords="<?= e(trans($item->keywords)); ?>">
                         <a href="<?= $item->url; ?>" target="<?= $item->target ?? '_self';?>">
-                            <i class="sidebar-menu-item <?= $item->icon; ?>"></i>
+                            <?php if ($item->iconSvg === null): ?>
+                                <i class="sidebar-menu-item <?= $item->icon; ?>"></i>
+                            <?php else: ?>
+                                <img src="<?= $item->iconSvg; ?>" style="width: 25px; margin-left: -30px; float: left">
+                            <?php endif; ?>
                             <span class="header"><?= e(trans($item->label)); ?></span>
                             <span class="description"><?= e(trans($item->description)); ?></span>
                         </a>

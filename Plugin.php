@@ -271,7 +271,7 @@ class Plugin extends PluginBase
     {
         Log::debug(__METHOD__);
 
-        $custommenus = custommenu::where('is_submenu', 1)
+        $custommenus = CustomMenu::where('is_submenu', 1)
             ->where('is_active', 1)
             ->get();
 
@@ -280,14 +280,29 @@ class Plugin extends PluginBase
             $count = 0;
             foreach ($custommenu->links as $text => $link) {
                 if ($link['is_active'] == 1) {
+                    $icon = $iconSvg = null;
+
+                    if (isset($link['icon']) && $link['icon'] != '') {
+                        $icon = $link['icon'];
+                    }
+
+                    if (isset($link['icon_image']) && $link['icon_image'] != '') {
+                        $iconSvg = url(Config::get('cms.storage.media.path') . $link['icon_image']);
+                    }
+
+                    Log::debug($icon);
+                    Log::debug($iconSvg);
+
                     $inject['custommenulist.' . $custommenu->slug . '.' . Str::slug($link['text'])] = [
                         'label' => $link['text'],
-                        'group' => 'xitara.custommenulist.' . $custommenu->slug,
                         'url' => $link['link'],
-                        'icon' => 'icon-archive',
+                        'icon' => $icon ?? null,
+                        'iconSvg' => $iconSvg,
                         'permissions' => ['submenu.custommenu.' . $custommenu->slug . '.'
                             . Str::slug($link['text'])],
                         'attributes' => [
+                            'group' => 'xitara.custommenulist.' . $custommenu->slug,
+                            'groupLabel' => $custommenu->name,
                             'target' => ($link['is_blank'] == 1) ? '_blank' : null,
                             'keywords' => $link['keywords'] ?? null,
                             'description' => $link['description'] ?? null,
