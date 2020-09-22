@@ -33,6 +33,7 @@ use App;
 use Backend;
 use BackendMenu;
 use Event;
+use Xitara\Core\Plugin as Core;
 ```
 
 ### Add to boot() method to catch event and display new sidemenu.
