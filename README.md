@@ -82,6 +82,7 @@ public static function injectSideMenu()
             'attributes' => [ // can be extendet if you need, no limitations
                 'group' => '[VENDOR].[PLUGIN-SLUG]::lang.submenu.label',
                 'level' => 1, // optional, default is level 0. adds css-class level-X to li
+            ],
             'order' => Core::getMenuOrder('[VENDOR].[PLUGIN-SLUG]') + $i++,
         ],
         ...
