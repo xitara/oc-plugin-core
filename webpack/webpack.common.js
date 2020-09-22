@@ -8,6 +8,7 @@ module.exports = {
     context: paths.src,
     entry: {
         app: `./js/app.js`,
+        compact: `./scss/compact.scss`,
     },
     output: {
         // filename: `assets/js/[name].[hash:8].js`,

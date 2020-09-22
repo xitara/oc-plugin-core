@@ -1,4 +1,4 @@
-# Xitara Core Plugin [![devDependency Status](https://david-dm.org/xitara/webpack-boilerplate/dev-status.svg)](https://david-dm.org/xitara/webpack-boilerplate/?type=dev) [![Known Vulnerabilities](https://snyk.io/test/github/xitara/webpack-boilerplate/badge.svg)](https://snyk.io//test/github/xitara/webpack-boilerplate)
+# Xitara Core Plugin [![devDependency Status](https://david-dm.org/xitara/oc-plugin-core/dev-status.svg)](https://david-dm.org/xitara/oc-plugin-core/?type=dev) [![Known Vulnerabilities](https://snyk.io/test/github/xitara/oc-plugin-core/badge.svg)](https://snyk.io//test/github/xitara/oc-plugin-core)
 
 Implements backend sidemenu, custom menus, menu sorting
 
@@ -26,6 +26,17 @@ Implements backend sidemenu, custom menus, menu sorting
 - `check-stylelint-config` - check if Stylelint config contains any rules that are unnecessary or conflict with Prettier
 
 ## Register new Plugin to Sidemenu
+
+### Add following to boot() method to catch event and display new sidemenu.
+```php
+Event::listen('backend.page.beforeDisplay', function ($controller, $action, $params) {
+    $namespace = (new \ReflectionObject($controller))->getNamespaceName();
+
+    if ($namespace == '[VENDOR]\[PLUGIN]\Controllers') {
+        Core::getSideMenu('[VENDOR].[PLUGIN]', '[PLUGIN-SLUG]');
+    }
+});
+```
 
 ### Register partial
 ```php
@@ -59,18 +70,20 @@ public function registerNavigation()
 
 ### Inject menu items
 ```php
-        $i = 0;
-        return [
-            '[PLUGIN-SLUG].[CONTROLLER]' => [
-                'label' => '[VENDOR].[PLUGIN-SLUG]::lang.submenu.[CONTROLLER]',
-                'group' => '[VENDOR].[PLUGIN-SLUG]::lang.submenu.label',
-                'url' => Backend::url('[VENDOR]/[PLUGIN-SLUG]/[CONTROLLER]'),
-                'icon' => 'icon-archive',
-                'permissions' => ['[VENDOR].[PLUGIN-SLUG].*'],
-                'order' => Core::getMenuOrder('[VENDOR].[PLUGIN-SLUG]') + $i++,
-            ],
-            ...
-        ];
+$i = 0;
+return [
+    '[PLUGIN-SLUG].[CONTROLLER]' => [
+        'label' => '[VENDOR].[PLUGIN-SLUG]::lang.submenu.[CONTROLLER]',
+        'url' => Backend::url('[VENDOR]/[PLUGIN-SLUG]/[CONTROLLER]'),
+        'icon' => 'icon-archive',
+        'permissions' => ['[VENDOR].[PLUGIN-SLUG].*'],
+        'attributes' => [ // can be extendet if you need, no limitations
+            'group' => '[VENDOR].[PLUGIN-SLUG]::lang.submenu.label',
+            'level' => 1, // optional, default is level 0. adds css-class level-X to li
+        'order' => Core::getMenuOrder('[VENDOR].[PLUGIN-SLUG]') + $i++,
+    ],
+    ...
+];
 ```
 
 ## Translation
@@ -86,21 +99,21 @@ use Xitara\Core\Models\Config;
 
 and as registration method
 ```php
-    public function registerSettings()
-    {
-        if (($category = Config::get('menu_text')) == '') {
-            $category = 'xitara.core::core.config.name';
-        }
-
-        return [
-            'configs' => [
-                'category' => $category,
-                'label' => '[VENDOR_SLUG].[PLUGIN_SLUG]::lang.submenu.label',
-                'description' => '[VENDOR_SLUG].[PLUGIN_SLUG]::lang.submenu.description',
-                'icon' => 'icon-comments-o',
-                'class' => '[VENDOR]\[PLUGIN]\Models\Config',
-                'order' => 20,
-            ],
-        ];
+public function registerSettings()
+{
+    if (($category = Config::get('menu_text')) == '') {
+        $category = 'xitara.core::core.config.name';
     }
+
+    return [
+        'configs' => [
+            'category' => $category,
+            'label' => '[VENDOR_SLUG].[PLUGIN_SLUG]::lang.submenu.label',
+            'description' => '[VENDOR_SLUG].[PLUGIN_SLUG]::lang.submenu.description',
+            'icon' => 'icon-comments-o',
+            'class' => '[VENDOR]\[PLUGIN]\Models\Config',
+            'order' => 20,
+        ],
+    ];
+}
 ```

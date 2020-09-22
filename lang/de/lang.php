@@ -32,5 +32,7 @@ return [
         'link' => 'Link',
         'text' => 'Text',
         'is_blank' => 'Link im neuen Fenster/Tab öffnen',
+        'icon' => 'Icon',
+        'icon_comment' => 'Entweder aus dem <a href="https://octobercms.com/docs/ui/icon" target="_blank">Iconpool</a> oder eine Datei aus dem Medienpool. Beides ist optional.',
     ],
 ];

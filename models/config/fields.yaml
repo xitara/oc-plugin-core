@@ -8,13 +8,17 @@ fields:
         type: text
         span: left
         comment: xitara.core::config.menu_text_comment
+    compact_display:
+        label: xitara.core::config.compact_display
+        type: switch
+        span: right
+        comment: xitara.core::config.compact_display_comment
     menu_icon:
         label: xitara.core::config.menu_icon
         type: mediafinder
         mode: image
-        fileTypes: svg
-        imageWidth: 30px
-        imageHeight: 30px
+        imageWidth: 100
+        imageHeight: 100
         span: left
         comment: xitara.core::config.menu_icon_comment
     menu_icon_text:
@@ -22,3 +26,4 @@ fields:
         type: text
         span: right
         comment: xitara.core::config.menu_icon_text_comment
+        commentHtml: true
