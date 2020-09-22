@@ -25,19 +25,35 @@ fields:
                 text:
                     label: xitara.core::lang.custommenu.text
                     type: text
-                    span: auto
+                    span: left
                 link:
                     label: xitara.core::lang.custommenu.link
                     type: text
-                    span: auto
+                    span: right
+                icon:
+                    label: xitara.core::lang.custommenu.icon
+                    comment: xitara.core::lang.custommenu.icon_comment
+                    commentHtml: true
+                    type: text
+                    span: left
+                icon_image:
+                    label: xitara.core::lang.custommenu.icon
+                    type: mediafinder
+                    mode: image
+                    span: right
+                    fileTypes: svg
+                    imageWidth: 100
+                    imageHeight: 100
                 is_blank:
                     label: xitara.core::lang.custommenu.is_blank
                     type: switch
-                    span: auto
+                    span: storm
+                    cssClass: col-md-3
                     default: 1
                 is_active:
                     label: xitara.core::lang.custommenu.is_active
                     type: switch
-                    span: auto
+                    span: storm
+                    cssClass: col-md-3
                     default: 1
 

@@ -11,6 +11,7 @@ class CreateMenusTable extends Migration
         Schema::create('xitara_core_menus', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->string('code', 100)->nullable();
+            $table->string('name', 100)->nullable();
             $table->integer('sort_order')->nullable();
             $table->unique('code');
         });
