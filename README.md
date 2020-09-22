@@ -70,20 +70,23 @@ public function registerNavigation()
 
 ### Inject menu items
 ```php
-$i = 0;
-return [
-    '[PLUGIN-SLUG].[CONTROLLER]' => [
-        'label' => '[VENDOR].[PLUGIN-SLUG]::lang.submenu.[CONTROLLER]',
-        'url' => Backend::url('[VENDOR]/[PLUGIN-SLUG]/[CONTROLLER]'),
-        'icon' => 'icon-archive',
-        'permissions' => ['[VENDOR].[PLUGIN-SLUG].*'],
-        'attributes' => [ // can be extendet if you need, no limitations
-            'group' => '[VENDOR].[PLUGIN-SLUG]::lang.submenu.label',
-            'level' => 1, // optional, default is level 0. adds css-class level-X to li
-        'order' => Core::getMenuOrder('[VENDOR].[PLUGIN-SLUG]') + $i++,
-    ],
-    ...
-];
+public static function injectSideMenu()
+{
+    $i = 0;
+    return [
+        '[PLUGIN-SLUG].[CONTROLLER]' => [
+            'label' => '[VENDOR].[PLUGIN-SLUG]::lang.submenu.[CONTROLLER]',
+            'url' => Backend::url('[VENDOR]/[PLUGIN-SLUG]/[CONTROLLER]'),
+            'icon' => 'icon-archive',
+            'permissions' => ['[VENDOR].[PLUGIN-SLUG].*'],
+            'attributes' => [ // can be extendet if you need, no limitations
+                'group' => '[VENDOR].[PLUGIN-SLUG]::lang.submenu.label',
+                'level' => 1, // optional, default is level 0. adds css-class level-X to li
+            'order' => Core::getMenuOrder('[VENDOR].[PLUGIN-SLUG]') + $i++,
+        ],
+        ...
+    ];
+}
 ```
 
 ## Translation
