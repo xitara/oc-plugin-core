@@ -27,7 +27,15 @@ Implements backend sidemenu, custom menus, menu sorting
 
 ## Register new Plugin to Sidemenu
 
-### Add following to boot() method to catch event and display new sidemenu.
+### Add on top of Plugin.php
+```php
+use App;
+use Backend;
+use BackendMenu;
+use Event;
+```
+
+### Add to boot() method to catch event and display new sidemenu.
 ```php
 Event::listen('backend.page.beforeDisplay', function ($controller, $action, $params) {
     $namespace = (new \ReflectionObject($controller))->getNamespaceName();
