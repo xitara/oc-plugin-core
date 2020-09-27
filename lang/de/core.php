@@ -10,6 +10,7 @@ return [
     ],
     'menu' => 'Menü',
     'name' => 'Name',
+    'slug' => 'Slug',
     'user_id' => 'User ID',
     'username' => 'Username',
     'error' => 'Fehler',
