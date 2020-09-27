@@ -32,7 +32,7 @@ class Plugin extends PluginBase
             'author' => 'xitara.core::lang.plugin.author',
             'homepage' => 'xitara.core::lang.plugin.homepage',
             'icon' => '',
-            'iconSvg' => 'plugins/xitara/core/assets/images/icon.svg',
+            'iconSvg' => 'plugins/xitara/core/assets/images/icon-core.svg',
         ];
     }
 
@@ -127,7 +127,7 @@ class Plugin extends PluginBase
     {
         $iconSvg = CoreConfig::get('menu_icon');
         if ($iconSvg == '' && CoreConfig::get('menu_icon_text', '') == '') {
-            $iconSvg = 'plugins/xitara/core/assets/images/icon.svg';
+            $iconSvg = 'plugins/xitara/core/assets/images/icon-core.svg';
         } elseif ($iconSvg != '') {
             $iconSvg = url(Config::get('cms.storage.media.path') . $iconSvg);
         }
@@ -189,8 +189,6 @@ class Plugin extends PluginBase
     public static function getSideMenu(string $owner, string $code)
     {
         Log::debug(CoreConfig::get('menu_text'));
-        Log::debug('owner: ' . $owner);
-
         if (($group = CoreConfig::get('menu_text')) == '') {
             $group = 'xitara.core::lang.submenu.label';
         }

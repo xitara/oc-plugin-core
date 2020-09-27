@@ -17,8 +17,8 @@ fields:
         label: xitara.core::config.menu_icon
         type: mediafinder
         mode: image
-        imageWidth: 60
-        imageHeight: 60
+        imageWidth: 100
+        imageHeight: 100
         span: left
         comment: xitara.core::config.menu_icon_comment
     menu_icon_text:
