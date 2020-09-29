@@ -228,7 +228,7 @@ class Plugin extends PluginBase
         ];
 
         foreach (PluginManager::instance()->getPlugins() as $name => $plugin) {
-            if (strpos($name, 'Xitara.') !== false) {
+            if (strpos($name, 'Xitara.') !== false || strpos($name, 'Kuse.') !== false) {
                 $namespace = str_replace('.', '\\', $name) . '\Plugin';
 
                 if (method_exists($namespace, 'injectSideMenu')) {
