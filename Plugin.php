@@ -16,7 +16,7 @@ use Xitara\Core\Models\Menu;
 class Plugin extends PluginBase
 {
     public $require = [
-        'Indikator.Backend',
+        'Romanov.ClearCacheWidget',
     ];
 
     /**
