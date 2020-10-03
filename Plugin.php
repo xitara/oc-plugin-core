@@ -16,7 +16,7 @@ use Xitara\Core\Models\Menu;
 class Plugin extends PluginBase
 {
     public $require = [
-        'Indikator.Backend',
+        'Romanov.ClearCacheWidget',
     ];
 
     /**
@@ -228,18 +228,14 @@ class Plugin extends PluginBase
         ];
 
         foreach (PluginManager::instance()->getPlugins() as $name => $plugin) {
-            if (strpos($name, 'Xitara.') !== false) {
-                $namespace = str_replace('.', '\\', $name) . '\Plugin';
+            $namespace = str_replace('.', '\\', $name) . '\Plugin';
 
-                if (method_exists($namespace, 'injectSideMenu')) {
-                    $inject = $namespace::injectSideMenu();
+            if (method_exists($namespace, 'injectSideMenu')) {
+                $inject = $namespace::injectSideMenu();
 
-                    $items = array_merge($items, $inject);
-                }
+                $items = array_merge($items, $inject);
             }
         }
-        // var_dump(count($items));
-        // var_dump($items);
 
         Event::listen('backend.menu.extendItems', function ($manager) use ($owner, $code, $items) {
             $manager->addSideMenuItems($owner, $code, $items);
@@ -311,9 +307,6 @@ class Plugin extends PluginBase
             }
         }
 
-        // var_dump($inject);
-
-        // return [];
         return $inject;
     }
 }

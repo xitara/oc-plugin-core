@@ -23,19 +23,10 @@ defaultWidgets:
             ocWidgetWidth: 5
 
    cacheStatus:
-        class: Indikator\Backend\ReportWidgets\Cache
-        title: indikator.backend::lang.widgets.cache.label
+        class: Romanov\ClearCacheWidget\ReportWidgets\ClearCache
+        title: File Cache
         sortOrder: 80
         configuration:
             ocWidgetWidth: 4
-
-   statusPlus:
-        class: Indikator\Backend\ReportWidgets\Status
-        title: indikator.backend::lang.widgets.system.label
-        sortOrder: 90
-        configuration:
-            ocWidgetWidth: 3
-            webpage: true
-            updates: true
-            plugins: true
-            themes: true
+            radius: 200
+            delthumbs: 1

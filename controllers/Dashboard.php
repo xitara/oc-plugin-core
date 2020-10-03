@@ -54,7 +54,7 @@ class Dashboard extends Controller
     protected function initReportContainer()
     {
         $container = new ReportContainer($this, 'config.yaml');
-        // $container = new ReportContainer($this, ['context' => 'coreDashboard',]);
+        // $container = new ReportContainer($this, ['context' => 'coreDashboard']);
         $container->bindToController();
         return $container;
     }
