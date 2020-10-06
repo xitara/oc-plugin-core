@@ -30,6 +30,8 @@ class Dashboard extends Controller
         parent::__construct();
         BackendMenu::setContextOwner('Xitara.Core');
         BackendMenu::setContext('Xitara.Core', 'core', 'core.dashboard');
+
+        $this->pageTitle = 'xitara.core::core.submenu.dashboard';
     }
 
     public function componentDetails()
