@@ -86,7 +86,7 @@ public function registerNavigation()
     }
 
     return [
-        'dynamiccontent' => [
+        '[VENDOR-SLUG]' => [
             'label' => $label,
             'url' => Backend::url('[VENDOR-SLUG]/[PLUGIN-SLUG]/[CONTROLLER'),
             'icon' => 'icon-leaf',

@@ -5,7 +5,6 @@ use Backend;
 use BackendMenu;
 use Config;
 use Event;
-use Log;
 use Str;
 use System\Classes\PluginBase;
 use System\Classes\PluginManager;
@@ -188,11 +187,11 @@ class Plugin extends PluginBase
      */
     public static function getSideMenu(string $owner, string $code)
     {
-        Log::debug(CoreConfig::get('menu_text'));
+        // Log::debug(CoreConfig::get('menu_text'));
         if (($group = CoreConfig::get('menu_text')) == '') {
             $group = 'xitara.core::lang.submenu.label';
         }
-        Log::debug($group);
+        // Log::debug($group);
 
         $items = [
             'core.dashboard' => [
@@ -263,7 +262,7 @@ class Plugin extends PluginBase
      */
     public static function injectSideMenu()
     {
-        Log::debug(__METHOD__);
+        // Log::debug(__METHOD__);
 
         $custommenus = CustomMenu::where('is_submenu', 1)
             ->where('is_active', 1)
@@ -284,8 +283,8 @@ class Plugin extends PluginBase
                         $iconSvg = url(Config::get('cms.storage.media.path') . $link['icon_image']);
                     }
 
-                    Log::debug($icon);
-                    Log::debug($iconSvg);
+                    // Log::debug($icon);
+                    // Log::debug($iconSvg);
 
                     $inject['custommenulist.' . $custommenu->slug . '.' . Str::slug($link['text'])] = [
                         'label' => $link['text'],
