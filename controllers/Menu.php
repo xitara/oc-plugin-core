@@ -27,7 +27,6 @@ class Menu extends Controller
     private function collectMenuItems()
     {
         foreach (PluginManager::instance()->getPlugins() as $name => $plugin) {
-            // if (strpos($name, 'Xitara.') !== false) {
             $namespace = str_replace('.', '\\', $name) . '\Plugin';
 
             if (method_exists($namespace, 'injectSideMenu')) {
@@ -38,7 +37,13 @@ class Menu extends Controller
                 }
 
                 $item = array_shift($menu);
-                $group = $item['group'] ?? $item->attributes['group'] ?? null;
+
+                if (isset($item['attributes']['no_reorder']) &&
+                    $item['attributes']['no_reorder'] == true) {
+                    continue;
+                }
+
+                $group = $item['group'] ?? $item['attributes']['group'] ?? null;
 
                 if ($group === null) {
                     continue;
@@ -57,9 +62,7 @@ class Menu extends Controller
                 $model->sort_order = 9999;
                 $model->save();
             }
-            // }
         }
-        // exit;
 
         /**
          * resort sort_order

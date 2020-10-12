@@ -14,6 +14,10 @@ return [
         'menu_order' => 'Menü-Sortierung',
         'user_menus' => 'Benutzerdefinierte Menüs',
     ],
+    'validation' => [
+        'date' => 'Das ist kein gültiges Datum',
+        'only_numbers' => 'Es sind nur Zahlen erlaubt',
+    ],
     'add' => 'Hinzufügen',
     'add_m' => ':model hinzufügen',
     'address' => 'Adresse',
@@ -54,6 +58,7 @@ return [
     'second_s' => 'Sekunde(n)',
     'slug' => 'Slug',
     'text' => 'Text',
+    'texts' => 'Texte',
     'timezone' => 'Zeitzone',
     'update_m' => ':model bearbeiten',
     'updated_at' => 'Geändert',
