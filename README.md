@@ -49,11 +49,11 @@ if (!App::runningInBackend()) {
 /**
  * get sidemenu if core-plugin is loaded
  */
-if (PluginManager::instance()->exists('Xitara\Core') === true) {
+if (PluginManager::instance()->exists('Xitara.Core') === true) {
     Event::listen('backend.page.beforeDisplay', function ($controller, $action, $params) {
         $namespace = (new \ReflectionObject($controller))->getNamespaceName();
 
-        if ($namespace == 'Xitara\[VENDOR]\[PLUGIN]') {
+        if ($namespace == '[VENDOR]\[PLUGIN]\Controllers') {
             \Xitara\Core\Plugin::getSideMenu('[VENDOR].[PLUGIN]', '[PLUGIN-SLUG]');
         }
     });
@@ -64,7 +64,7 @@ if (PluginManager::instance()->exists('Xitara\Core') === true) {
 ```php
 public function register()
 {
-    if (PluginManager::instance()->exists('Xitara\Core') === true) {
+    if (PluginManager::instance()->exists('Xitara.Core') === true) {
         BackendMenu::registerContextSidenavPartial(
             '[VENDOR].[PLUGIN]',
             '[PLUGIN-SLUG]',
@@ -81,7 +81,7 @@ public function registerNavigation()
 {
     $label = '[VENDOR-SLUG].[PLUGIN-SLUG]::lang.plugin.name';
 
-    if (PluginManager::instance()->exists('Xitara\Core') === true) {
+    if (PluginManager::instance()->exists('Xitara.Core') === true) {
         $label .= '::hidden';
     }
 
