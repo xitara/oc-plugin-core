@@ -3,6 +3,7 @@
 use BackendMenu;
 use Backend\Classes\Controller;
 use Backend\Widgets\ReportContainer;
+use Cms\Classes\Theme;
 
 /**
  * Dashboard Back-end Controller
@@ -32,29 +33,40 @@ class Dashboard extends Controller
         BackendMenu::setContext('Xitara.Core', 'core', 'core.dashboard');
     }
 
-    public function componentDetails()
-    {
-        return [
-            'name' => 'xitara.core::lang.core.dashboard',
-            'description' => 'xitara.core::lang.core.dashboardDescription',
-        ];
-    }
+    // public function componentDetails()
+    // {
+    //     return [
+    //         'name' => 'xitara.core::lang.core.dashboard',
+    //         'description' => 'xitara.core::lang.core.dashboardDescription',
+    //     ];
+    // }
 
     public function index()
     {
         $this->initReportContainer();
+        $this->pageTitle = 'xitara.core::lang.plugin.name';
+
         // $this->asExtension('ListController')->index();
     }
 
     /**
      * Prepare the report widget used by the dashboard
+     *
+     * Default config can be overridden by adding a file [THEME]/config/dashboard.yaml
+     *
      * @param Model $model
      * @return void
      */
     protected function initReportContainer()
     {
-        $container = new ReportContainer($this, 'config.yaml');
-        // $container = new ReportContainer($this, ['context' => 'coreDashboard']);
+        $config = 'config.yaml';
+        if ($theme = Theme::getActiveTheme()) {
+            if (file_exists(themes_path($theme->getDirName() . '/config/dashboard.yaml'))) {
+                $config = themes_path($theme->getDirName() . '/config/dashboard.yaml');
+            }
+        }
+
+        $container = new ReportContainer($this, $config);
         $container->bindToController();
         return $container;
     }

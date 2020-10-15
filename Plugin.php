@@ -192,7 +192,7 @@ class Plugin extends PluginBase
         if (($group = CoreConfig::get('menu_text')) == '') {
             $group = 'xitara.core::lang.submenu.label';
         }
-        Log::debug($group);
+        // Log::debug($group);
 
         $items = [
             'core.dashboard' => [
