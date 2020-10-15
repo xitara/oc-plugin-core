@@ -21,44 +21,48 @@ class Menu extends Controller
         parent::__construct();
         BackendMenu::setContext('Xitara.Core', 'core', 'core.menu');
         $this->collectMenuItems();
+        $this->pageTitle = 'xitara.core::core.submenu.menu_order';
     }
 
     private function collectMenuItems()
     {
         foreach (PluginManager::instance()->getPlugins() as $name => $plugin) {
-            if (strpos($name, 'Xitara.') !== false) {
-                $namespace = str_replace('.', '\\', $name) . '\Plugin';
+            $namespace = str_replace('.', '\\', $name) . '\Plugin';
 
-                if (method_exists($namespace, 'injectSideMenu')) {
-                    $menu = $namespace::injectSideMenu();
+            if (method_exists($namespace, 'injectSideMenu')) {
+                $menu = $namespace::injectSideMenu();
 
-                    if (empty($menu)) {
-                        continue;
-                    }
-
-                    $item = array_shift($menu);
-                    $group = $item['group'] ?? $item->attributes['group'] ?? null;
-
-                    if ($group === null) {
-                        continue;
-                    }
-
-                    $code = explode('::', $group);
-                    $code = $code[0];
-                    $model = MenuModel::find($code);
-
-                    if ($model !== null) {
-                        continue;
-                    }
-
-                    $model = new MenuModel;
-                    $model->code = $code;
-                    $model->sort_order = 9999;
-                    $model->save();
+                if (empty($menu)) {
+                    continue;
                 }
+
+                $item = array_shift($menu);
+
+                if (isset($item['attributes']['no_reorder']) &&
+                    $item['attributes']['no_reorder'] == true) {
+                    continue;
+                }
+
+                $group = $item['group'] ?? $item['attributes']['group'] ?? null;
+
+                if ($group === null) {
+                    continue;
+                }
+
+                $code = explode('::', $group);
+                $code = $code[0];
+                $model = MenuModel::find($code);
+
+                if ($model !== null) {
+                    continue;
+                }
+
+                $model = new MenuModel;
+                $model->code = $code;
+                $model->sort_order = 9999;
+                $model->save();
             }
         }
-        // exit;
 
         /**
          * resort sort_order

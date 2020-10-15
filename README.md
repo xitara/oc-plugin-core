@@ -33,31 +33,45 @@ use App;
 use Backend;
 use BackendMenu;
 use Event;
-use Xitara\Core\Plugin as Core;
+use System\Classes\PluginBase;
+use System\Classes\PluginManager;
 ```
 
 ### Add to boot() method to catch event and display new sidemenu.
 ```php
-Event::listen('backend.page.beforeDisplay', function ($controller, $action, $params) {
-    $namespace = (new \ReflectionObject($controller))->getNamespaceName();
+/**
+ * Check if we are currently in backend module.
+ */
+if (!App::runningInBackend()) {
+    return;
+}
 
-    if ($namespace == '[VENDOR]\[PLUGIN]\Controllers') {
-        Core::getSideMenu('[VENDOR].[PLUGIN]', '[PLUGIN-SLUG]');
-    }
-});
+/**
+ * get sidemenu if core-plugin is loaded
+ */
+if (PluginManager::instance()->exists('Xitara.Core') === true) {
+    Event::listen('backend.page.beforeDisplay', function ($controller, $action, $params) {
+        $namespace = (new \ReflectionObject($controller))->getNamespaceName();
+
+        if ($namespace == '[VENDOR]\[PLUGIN]\Controllers') {
+            \Xitara\Core\Plugin::getSideMenu('[VENDOR].[PLUGIN]', '[PLUGIN-SLUG]');
+        }
+    });
+}
 ```
 
-### Register partial
+### Register sidemenu partial
 ```php
 public function register()
 {
-    BackendMenu::registerContextSidenavPartial(
-        '[VENDOR].[PLUGIN]',
-        '[PLUGIN-SLUG]',
-        '$/xitara/core/partials/_sidebar.htm'
-    );
-
-    ...
+    if (PluginManager::instance()->exists('Xitara.Core') === true) {
+        BackendMenu::registerContextSidenavPartial(
+            '[VENDOR].[PLUGIN]',
+            '[PLUGIN-SLUG]',
+            '$/xitara/core/partials/_sidebar.htm'
+        );
+    }
+    // ...
 }
 ```
 
@@ -65,12 +79,18 @@ public function register()
 ```php
 public function registerNavigation()
 {
+    $label = '[VENDOR-SLUG].[PLUGIN-SLUG]::lang.plugin.name';
+
+    if (PluginManager::instance()->exists('Xitara.Core') === true) {
+        $label .= '::hidden';
+    }
+
     return [
-        '[PLUGIN-SLUG]' => [
-            'label' => '[PLUGIN]::hidden',
-            'url' => Backend::url('[VENDOR]/[PLUGIN-SLUG]/mycontroller'),
+        '[VENDOR-SLUG]' => [
+            'label' => $label,
+            'url' => Backend::url('[VENDOR-SLUG]/[PLUGIN-SLUG]/[CONTROLLER'),
             'icon' => 'icon-leaf',
-            'permissions' => ['[VENDOR].[PLUGIN-SLUG].*'],
+            'permissions' => ['[VENDOR-SLUG].[PLUGIN-SLUG].*'],
             'order' => 500,
         ],
     ];
@@ -101,8 +121,8 @@ public static function injectSideMenu()
 
 ## Translation
 
-- `[VENDOR].[PLUGIN-SLUG]::lang.submenu.label` is the heading of your menu items
-- `[VENDOR].[PLUGIN-SLUG]::lang.submenu.[CONTROLLER]` is the your menu item
+- `[VENDOR-SLUG].[PLUGIN-SLUG]::lang.submenu.label` is the heading of your menu items
+- `[VENDOR-SLUG].[PLUGIN-SLUG]::lang.submenu.[CONTROLLER]` is the your menu item
 
 ## Register backend configs
 On top of `Plugin.php`:

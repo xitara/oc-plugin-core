@@ -21,5 +21,7 @@ class CustomMenus extends Controller
         parent::__construct();
 
         BackendMenu::setContext('Xitara.Core', 'core', 'core.custommenus');
+
+        $this->pageTitle = 'xitara.core::core.submenu.user_menus';
     }
 }
