@@ -69,6 +69,13 @@ class Plugin extends PluginBase
             $controller->addCss('/plugins/xitara/core/assets/css/app.css');
             $controller->addJs('/plugins/xitara/core/assets/js/app.js');
         });
+
+        /**
+         * remove original dashboard
+         */
+        Event::listen('backend.menu.extendItems', function ($navigationManager) {
+            $navigationManager->removeMainMenuItem('October.Backend', 'dashboard');
+        });
     }
 
     public function registerSettings()
