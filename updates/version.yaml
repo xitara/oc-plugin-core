@@ -4,3 +4,4 @@
 1.0.2:
     - Add linklists
     - create_custommenus_table.php
+1.0.3: Add submenu level, fakedata-commands, translations
