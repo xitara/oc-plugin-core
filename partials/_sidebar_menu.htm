@@ -89,11 +89,9 @@
             </div>
             <ul>
             <?php foreach ($items as $item): ?>
-                <?php if (isset($item->attributes['placeholder'])
-                    && $item->attributes['placeholder'] === true): ?>
-                    <li class="placeholder"></li>
-                <?php elseif (!isset($item->hidden) || $item->hidden == false): ?>
-                    <li class="<?= BackendMenu::isSideMenuItemActive($item) ? 'active' : null; ?><?= isset($item->attributes['level']) ? ' level-' . $item->attributes['level'] : null; ?>"
+                <?php if (!isset($item->hidden) || $item->hidden == false): ?>
+                    <li class="<?= BackendMenu::isSideMenuItemActive($item) ? 'active' : null; ?><?= isset($item->attributes['level']) ? ' level-' . $item->attributes['level'] : null; ?><?php if (isset($item->attributes['placeholder'])
+                    && $item->attributes['placeholder'] === true): ?> placeholder<?php endif; ?>"
                         data-keywords="<?= e(trans($item->keywords)); ?>">
                         <a href="<?= $item->url; ?>" target="<?= $item->target ?? '_self';?>">
                             <?php if ($item->iconSvg === null): ?>

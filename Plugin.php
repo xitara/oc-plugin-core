@@ -5,6 +5,8 @@ use Backend;
 use BackendMenu;
 use Config;
 use Event;
+use Html;
+use Storage;
 use Str;
 use System\Classes\PluginBase;
 use System\Classes\PluginManager;
@@ -42,6 +44,9 @@ class Plugin extends PluginBase
             'core',
             '$/xitara/core/partials/_sidebar.htm'
         );
+
+        $this->registerConsoleCommand('core.fakeblog', 'Xitara\Core\Console\FakeBlog');
+        $this->registerConsoleCommand('core.fakeuser', 'Xitara\Core\Console\FakeUser');
     }
 
     public function boot()
@@ -307,5 +312,204 @@ class Plugin extends PluginBase
         }
 
         return $inject;
+    }
+
+    public function registerMarkupTags()
+    {
+        return [
+            'filters' => [
+                'phone_link' => [$this, 'filterPhoneLink'],
+                'email_link' => [$this, 'filterEmailLink'],
+                'mediadata' => [$this, 'filterMediaData'],
+                'filesize' => [$this, 'filterFileSize'],
+                'regex_replace' => [$this, 'filterRegexReplace'],
+                'slug' => 'str_slug',
+                'strip_html' => [$this, 'filterStripHtml'],
+                'truncate_html' => [$this, 'filterTruncateHtml'],
+            ],
+            'functions' => [
+                'uid' => [$this, 'functionGenerateUid'],
+            ],
+        ];
+    }
+
+    /**
+     * adds link to given phone
+     *
+     * options: {
+     *     'classes': 'class1 class2 classN',
+     *     'text_before': '<strong>sample</strong>',
+     *     'text_after': '<strong>sample</strong>',
+     *     'hide_mail': true|false (hide mail-address in text or not)
+     * }
+     *
+     * @param  string $text    text from twig
+     * @param  array $options options from twig
+     * @return string          complete link in html
+     */
+    public function filterPhoneLink($text, $options = null)
+    {
+        /**
+         * process options
+         */
+        $textBefore = $options['text_before'] ?? '';
+        $textAfter = $options['text_after'] ?? '';
+        $classes = $options['classes'] ?? null;
+        $hideNubmer = $options['hide_number'] ?? false;
+
+        /**
+         * generate link
+         */
+        $link = '<a';
+
+        if ($classes !== null) {
+            $link .= ' class="' . $classes . '"';
+        }
+
+        $link .= ' href="tel:';
+        $link .= preg_replace('/\(0\)|[^0-9\+]|\s+/', '', $text) . '">';
+        $link .= $textBefore;
+
+        if ($hideNubmer === false) {
+            $link .= $text;
+        }
+
+        $link .= $textAfter;
+        $link .= '</a>';
+
+        return $link;
+    }
+
+    /**
+     * adds link to given email
+     *
+     * options: {
+     *     'classes': 'class1 class2 classN',
+     *     'text_before': '<strong>sample</strong>',
+     *     'text_after': '<strong>sample</strong>',
+     *     'hide_mail': true|false (hide mail-address in text or not)
+     * }
+     *
+     * @param  string $text    text from twig
+     * @param  array $options options from twig
+     * @return string          complete link in html
+     */
+    public function filterEmailLink($text, $options = null)
+    {
+        /**
+         * remove subject and body from mail if given
+         */
+        $parts = explode('?', $text);
+        $mail = $parts[0];
+        $query = isset($parts[1]) ? '?' . $parts[1] : '';
+
+        /**
+         * obfuscate mailaddresses
+         * @var closure
+         */
+        // $o = function () use ($mail) {
+        //     $str = '';
+        //     $a = unpack("C*", $mail);
+
+        //     foreach ($a as $b) {
+        //         $str .= sprintf("%%%X", $b);
+        //     }
+
+        //     return $str;
+        // };
+
+        /**
+         * process options
+         */
+        $textBefore = $options['text_before'] ?? '';
+        $textAfter = $options['text_after'] ?? '';
+        $classes = $options['classes'] ?? null;
+        $hideMail = $options['hide_mail'] ?? false;
+
+        /**
+         * generate link
+         */
+        $link = '<a';
+
+        if ($classes !== null) {
+            $link .= ' class="' . $classes . '"';
+        }
+
+        $link .= ' href="mailto:' . Html::email($mail) . $query . '">';
+        $link .= $textBefore;
+
+        if ($hideMail === false) {
+            $link .= $mail;
+        }
+
+        $link .= $textAfter;
+        $link .= '</a>';
+
+        return $link;
+    }
+
+    /**
+     * mediadata filter
+     *
+     * file should be in storage/app/[path], where path-default is "media"
+     * for the media-manager
+     *
+     * @param  string $media filename
+     * @param  string $path  relativ path in storage/app
+     * @return array|boolean        filedata or false if file not exists
+     */
+    public function filterMediaData($media, $path = 'media')
+    {
+        if ($media === null) {
+            return false;
+        }
+
+        if (strpos(Storage::getMimetype($path . $media), '/')) {
+            list($type, $art) = explode('/', Storage::getMimetype($path . $media));
+        }
+
+        $data = [
+            'size' => Storage::size($path . $media),
+            'mime_type' => Storage::getMimetype($path . $media),
+            'type' => $type ?? null,
+            'art' => $art ?? null,
+        ];
+
+        return $data;
+    }
+
+    /**
+     * filesize filter
+     *
+     * returns filesize of given file
+     *
+     * @param  string $filename filename
+     * @param  string $path      path relative to storage/app, default "media"
+     * @return int|boolean           filesize in bytes or false if file not exists
+     */
+    public function filterFileSize($filename, $path = 'media')
+    {
+        $size = Storage::size($path . $filename);
+        return $size;
+    }
+
+    public function filterRegexReplace($subject, $pattern, $replacement)
+    {
+        return preg_replace($pattern, $replacement, $subject);
+    }
+
+    public function filterStripHtml($text)
+    {
+        return Html::strip($text);
+    }
+
+    public function filterTruncateHtml($text, $lenght, $hint = '...')
+    {
+        return Html::limit($text, $lenght, $hint);
+    }
+
+    public function functionGenerateUid()
+    {
+        return uniqid();
     }
 }

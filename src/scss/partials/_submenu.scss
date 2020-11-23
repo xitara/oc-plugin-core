@@ -3,8 +3,20 @@ $transition: all 0.3s linear;
 
 /* placeholder */
 li.placeholder {
-    height: 0;
-    border-top: 1px solid #aaa;
+    // height: 0;
+    border-bottom: 1px solid #aaa;
+}
+
+.level-1 {
+    padding-left: 1rem;
+}
+
+.level-2 {
+    padding-left: 2rem;
+}
+
+.level-3 {
+    padding-left: 3rem;
 }
 
 /* mobile menu */
