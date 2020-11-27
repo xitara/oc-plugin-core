@@ -12,7 +12,7 @@ class FakeUser extends Command
     /**
      * @var string The console command name.
      */
-    protected $name = 'core:fakeuser';
+    protected $name = 'xitara:fakeuser';
 
     /**
      * @var string The console command description.

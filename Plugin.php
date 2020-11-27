@@ -45,8 +45,8 @@ class Plugin extends PluginBase
             '$/xitara/core/partials/_sidebar.htm'
         );
 
-        $this->registerConsoleCommand('core.fakeblog', 'Xitara\Core\Console\FakeBlog');
-        $this->registerConsoleCommand('core.fakeuser', 'Xitara\Core\Console\FakeUser');
+        $this->registerConsoleCommand('xitara.fakeblog', 'Xitara\Core\Console\FakeBlog');
+        $this->registerConsoleCommand('xitara.fakeuser', 'Xitara\Core\Console\FakeUser');
     }
 
     public function boot()

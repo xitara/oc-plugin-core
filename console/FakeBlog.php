@@ -13,7 +13,7 @@ class FakeBlog extends Command
     /**
      * @var string The console command name.
      */
-    protected $name = 'core:fakeblog';
+    protected $name = 'xitara:fakeblog';
 
     /**
      * @var string The console command description.
