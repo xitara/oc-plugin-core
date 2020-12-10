@@ -9,6 +9,8 @@ module.exports = {
     context: paths.src,
     entry: {
         app: `./js/app.js`,
+        compact: `./scss/compact.scss`,
+        backend: `./scss/backend.scss`,
     },
     output: {
         filename: `assets/js/[name].js`,
@@ -38,12 +40,12 @@ module.exports = {
                             postcssOptions: {
                                 sourceMap: true,
                                 plugins: [
-                                    // require('tailwindcss'),
+                                    require('tailwindcss'),
                                     require('autoprefixer'),
                                     require('postcss-flexbugs-fixes'),
                                 ],
                                 postCss: [
-                                    // TailwindCSS('tailwind.config.js'),
+                                    TailwindCSS('tailwind.config.js'),
                                 ],
                                 processCssUrls: false,
                             },
