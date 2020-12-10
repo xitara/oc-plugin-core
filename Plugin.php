@@ -6,6 +6,7 @@ use BackendMenu;
 use Config;
 use Event;
 use Html;
+use Redirect;
 use Storage;
 use Str;
 use System\Classes\PluginBase;
@@ -71,8 +72,13 @@ class Plugin extends PluginBase
                 $controller->addCss('/plugins/xitara/core/assets/css/compact.css');
             }
 
+            $controller->addCss('/plugins/xitara/core/assets/css/backend.css');
             $controller->addCss('/plugins/xitara/core/assets/css/app.css');
             $controller->addJs('/plugins/xitara/core/assets/js/app.js');
+
+            if ($controller instanceof Backend\Controllers\Index) {
+                return Redirect::to('/backend/xitara/core/dashboard');
+            }
         });
 
         /**
