@@ -10,7 +10,6 @@ module.exports = {
     entry: {
         app: `./js/app.js`,
         compact: `./scss/compact.scss`,
-        backend: `./scss/backend.scss`,
     },
     output: {
         filename: `assets/js/[name].js`,
@@ -63,30 +62,30 @@ module.exports = {
                 test: /\.html$/,
                 use: 'html-loader',
             },
-			{
-				test: /\.(woff2?|eot|ttf|otf)$/,
-				use: {
-					loader: 'file-loader',
-					options: {
-						publicPath: 'assets/fonts',
-						outputPath: 'assets',
-						name: '[path][name].[ext]',
-						esModule: false,
-					},
-				},
-			},
-			{
-				test: /\.(gif|ico|jpe?g|png|svg|webp)$/,
-				use: {
-					loader: 'file-loader',
-					options: {
-						publicPath: 'assets/images',
-						outputPath: 'assets',
-						name: '[path][name].[ext]',
-						esModule: false,
-					},
-				},
-			},
+            {
+                test: /\.(woff2?|eot|ttf|otf)$/,
+                use: {
+                    loader: 'file-loader',
+                    options: {
+                        publicPath: 'assets/fonts',
+                        outputPath: 'assets',
+                        name: '[path][name].[ext]',
+                        esModule: false,
+                    },
+                },
+            },
+            {
+                test: /\.(gif|ico|jpe?g|png|svg|webp)$/,
+                use: {
+                    loader: 'file-loader',
+                    options: {
+                        publicPath: 'assets/images',
+                        outputPath: 'assets',
+                        name: '[path][name].[ext]',
+                        esModule: false,
+                    },
+                },
+            },
         ],
     },
     plugins: [
