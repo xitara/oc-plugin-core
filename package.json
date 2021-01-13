@@ -22,7 +22,7 @@
         "ftp": "bash ./bash/ftp.sh",
         "fly": "bash ./bash/fly.sh",
         "test": "bash ./bash/test.sh",
-        "check-eslint-config": "eslint eslint-config-prettier --print-config .eslintrc",
+        "check-eslint-config": "eslint-config-prettier --print-config .eslintrc",
         "check-stylelint-config": "stylelint-config-prettier-check",
         "lint-code": "eslint 'src/js/**/*.js'",
         "lint-style": "stylelint 'src/scss/**/*.{css,scss}'",
