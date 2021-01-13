@@ -3,7 +3,7 @@
 
 ### Custom ###
 build
-stats.json
+stats.json*
 assets
 src/**/*.css*
 yarn.lock
@@ -12,7 +12,7 @@ yarn.lock
 /favicon*
 /robots.txt
 /humans.txt
-/manifest.json
+*manifest.json
 *sublime-*
 *sftp-config*
 /bash/config.sh
