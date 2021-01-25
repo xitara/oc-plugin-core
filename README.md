@@ -1,3 +1,7 @@
+# !!DEPRICATED!! This plugin is discontinued while changing the namespace
+## Please use the new Nexus-Plugin: [https://github.com/xitara/oc-plugin-nexus](https://github.com/xitara/oc-plugin-nexus)
+There will be more features like PWA-base or darkmode for backend in near feature
+
 # Xitara Core Plugin [![devDependency Status](https://david-dm.org/xitara/oc-plugin-core/dev-status.svg)](https://david-dm.org/xitara/oc-plugin-core/?type=dev) [![Known Vulnerabilities](https://snyk.io/test/github/xitara/oc-plugin-core/badge.svg)](https://snyk.io//test/github/xitara/oc-plugin-core)
 
 Implements backend sidemenu, custom menus, menu sorting
